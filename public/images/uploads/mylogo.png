@@ -1,0 +1,12 @@
+--2022-11-12 22:35:05--  https://drive.google.com/file/d/1upnESWj9jw_dPKj71taqH8sGkJz7N1vM/view?usp=share_link
+Resolving drive.google.com (drive.google.com)... 142.251.46.238, 2607:f8b0:4005:813::200e
+Connecting to drive.google.com (drive.google.com)|142.251.46.238|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘view?usp=share_link’
+
+     0K .......... .......... .......... .......... .......... 1.45M
+    50K .......... .......... ..                                547K=0.07s
+
+2022-11-12 22:35:06 (970 KB/s) - ‘view?usp=share_link’ saved [74295]
+
