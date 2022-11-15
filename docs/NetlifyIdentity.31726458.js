@@ -1,1 +1,0 @@
-import{S as i,a as e,s as o,C as s}from"./chunks/index.b0a196cb.js";function a(t){return s(()=>{window.netlifyIdentity&&window.netlifyIdentity.on("init",n=>{n||window.netlifyIdentity.on("login",()=>{document.location.href="/admin/"})})}),[]}class f extends i{constructor(n){super(),e(this,n,a,null,o,{})}}export{f as default};
