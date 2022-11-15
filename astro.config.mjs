@@ -4,6 +4,7 @@ import svelte from '@astrojs/svelte'
 import tailwind from '@astrojs/tailwind'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
+import { defineConfig } from 'astro/config'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -16,12 +17,12 @@ const __dirname = dirname(__filename)
 // You can disable this by removing "@ts-check" and `@type` comments below.
 
 // @ts-check
-export default /** @type {import('astro').AstroUserConfig} */ ({
+export default defineConfig ({
   // root: '.',     // Where to resolve all URLs relative to. Useful if you have a monorepo project.
   // outDir: './dist',       // When running `astro build`, path to final static output
   // publicDir: './public',   // A folder of static files Astro will copy to the root. Useful for favicons, images, and other files that don’t need processing.
 
-  site: 'https://blog.tanzu.art', // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
+  site: 'https://artoftanzu.github.io', // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
   server: {
     // port: 3000,         // The port to run the dev server on.
   },
