@@ -25,7 +25,7 @@ export const SITE = {
     title: 'The Art of Tanzu',
     description: 'Stuff about Tanzu. Powered by Tanzu. Personal site, opinions are my own',
     url: 'https://blog.tanzu.art',
-    githubUrl: 'https://github.com/artoftanzu/blog',
+    githubUrl: 'https://github.com/artoftanzu/artoftanzu.github.io',
     listDrafts: true
     // description ?
 }
