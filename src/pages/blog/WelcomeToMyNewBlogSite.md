@@ -1,7 +1,7 @@
 ---
 layout: $/layouts/post.astro
 title: Welcome to my new blog site
-description: Introducing the new Art of Tanzu blog site, scope, plans & vision. 
+description: Yay look at me new blog yay. 
 # there MUST be at least 1 tag listed or it will not render
 tags:
   - Intro
