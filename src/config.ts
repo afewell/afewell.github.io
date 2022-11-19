@@ -21,11 +21,11 @@ export const NAV_ITEMS: NavItems = {
 
 export const SITE = {
     // Your site's detail?
-    name: 'The Art of Tanzu',
-    title: 'The Art of Tanzu',
-    description: 'Stuff about Tanzu. Powered by Tanzu. Personal site, opinions are my own',
-    url: 'https://blog.tanzu.art',
-    githubUrl: 'https://github.com/artoftanzu/artoftanzu.github.io',
+    name: 'Art Fewell\'s Blog',
+    title: 'Art Fewell\'s Blog',
+    description: 'This site provides words, sentences, and paragraphs - all at no extra charge',
+    url: 'https://artfewell.com',
+    githubUrl: 'https://github.com/afewell',
     listDrafts: true
     // description ?
 }

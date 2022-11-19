@@ -7,10 +7,10 @@ tags:
   - Intro
 author: Art Fewell
 authorTwitter: afewell
-date: 2022-11-14T08:00:18.276Z
+date: 2022-11-19T08:00:18.276Z
 ---
 
-Hi, My name is Art Fewell, and I work on the Tanzu technical marketing team at VMware. 
+Hi, My name is Art Fewell, pleased to meet you. I am starting this blog mostly to share info I learn about tech stuff. I do have a life beyond work, but I am fortunate to work doing what I love. And so my primary hobby just happens to coincide with what I do for work. 
 
 At my job I spend a lot of time working on and learning about cloud native technologies, digital transformation, and VMware Tanzu solutions. Most of what I do for work is for official projects, and I am starting this blog because in addition to the official projects I work on, I have a number of personal projects I would like to take on that I think will be fun and useful for the community. 
 
@@ -40,9 +40,9 @@ Whether you come from a dev or ops background, an ideal platform engineering tea
 
 ## Now to the fun part
 
-On this site's description, you may have noticed the line "Powered by Tanzu" - and that will be the focus of the initial blog series for this site. I want to build and host this site using TAP. And more, I want to set up a brand new full stack Tanzu environment to host the production site, and use this blog to chronicle the process of setting up the Tanzu for Kubernetes Operations (TKO) and TAP environments that I want the blog to run on. 
+I want to build and host this site using TAP. And more, I want to set up a brand new full stack Tanzu environment to host the production site, and use this blog to chronicle the process of setting up the Tanzu for Kubernetes Operations (TKO) and TAP environments that I want the blog to run on. 
 
-This creates a chicken and egg scenario as its hard for me to use this blog to chronicle the experience of setting up my environment when I need the blog to be live before the target hosting environment. So at launch, I am manually building the site from source and hosting with github pages. Over the next several posts, I will document the setup of the TKO and TAP environments and cover topics like how to use gitops for your cluster setup with flux, how to setup simple semantic versioning for your infracode and scripts, and how to implement CI/CD for a variety of different frameworks and applications I hope to play with in the future. 
+This creates a chicken and egg scenario as its hard for me to use this blog to chronicle the experience of setting up my environment when I need the blog to be live before the target hosting environment. So at launch, I am hosting with github pages. Over the next several posts, I will document the setup of the TKO and TAP environments and cover topics like how to use gitops for your cluster setup with flux, how to setup simple semantic versioning for your infracode and scripts, and how to implement CI/CD for a variety of different frameworks and applications I hope to play with in the future. 
 
 Over the coming days and weeks I will be adding new posts that chronicle my own journey into Tanzu Application Platform along with various lessons learned that I hope can help others learn and advance in our shared journey to embrace and deliver the latest technologies.
 
