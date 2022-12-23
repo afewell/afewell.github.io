@@ -1,13 +1,16 @@
 ---
 layout: $/layouts/post.astro
 title: "ChatGPT - A Huge Help with SSL Certificates!"
-description: "Watch ChatGPT provide nuanced and detailed responses for configuring my CA and SSL Certificates" 
+description: "Watch me interact with ChatGPT as it provides nuanced and detailed responses helping me configure a private self-signed CA for my Tanzu Application Platform, Kubernetes (minikube) and Harbor lab" 
 # there MUST be at least 1 tag listed or it will not render
 tags:
   - Intro
   - ChatGPT
   - Bash
   - "Platform Engineering"
+  - Kubernetes
+  - Certificates
+  - OvaTheTap
 author: Art Fewell
 authorTwitter: afewell
 date: 2022-12-23T08:00:18.276Z
@@ -21,7 +24,7 @@ I had to reconfigure a lab to use a private CA today, and once again find confli
 
 So while I did not expect a perfect answer, I did need lots of detailed, nuanced explanations to help me understand the many many different configuration options and help me weigh the pros and cons as to what I would keep in my initial and subsequent tests. 
 
-I was extremely impressed by the quality of responses - although it is worth noting that, if you look at the last 2 interactions I had with ChatGPT below, that it provided me with a recommended command, but it did not include an optional parameter that probably should have been included. After I asked it about the missing parameter, it informed me that it would be a good practice to include it, so much so that its own revised response stated that the solution may not even work in many cases without including the parameter. 
+I was extremely impressed by the quality of responses - although it is worth noting that, if you look at the last 2 interactions I had with ChatGPT below, that it provided me with a recommended command, but it did not include an optional parameter that probably should have been included. After I asked it about the missing parameter, it informed me that it would be a good practice to include it, so much so that its own response stated that the solution may not even work in many cases without including the parameter. 
 
 Check out the whole response below:
 
