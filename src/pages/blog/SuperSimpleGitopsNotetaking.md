@@ -11,7 +11,7 @@ tags:
   - Agile
 author: Art Fewell
 authorTwitter: afewell
-date: 2022-12-23T08:00:18.276Z
+date: 2022-12-24T08:00:18.276Z
 ---
 
 When we are under tight deadlines it can be very hard to document each step while building a project and often results in many things not being well documented or easily reusable. This also impacts smaller or personal projects usually even more as its even harder to find the extra time needed to document things. 
