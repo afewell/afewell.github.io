@@ -6,7 +6,9 @@ import PostPreviewList from '$/components/PostPreviewList.astro'
 const title = 'Home'
 const description = 'Stuff about Tanzu. Powered by Tanzu. Personal site, opinions are my own'
 
-const posts = await Astro.glob('./blog/*.md')
+const posts = (await Astro.glob('./blog/*.{md,mdx}')).sort(
+	(a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf()
+);
 ---
 <DefaultPageLayout content={{ title, description }} showPageHeader={false}>
     <PostPreviewList posts={posts} />
