@@ -1,7 +1,7 @@
 ---
 layout: $/layouts/post.astro
 title: "Creating a Custom ClusterIssuer using a Private Certificate Authority for a Tanzu Application Platform 1.4 Installation"
-description: "Watch me interact with ChatGPT as it provides nuanced and detailed responses helping me configure a private self-signed CA for my Tanzu Application Platform, Kubernetes (minikube) and Harbor lab" 
+description: "In this blog I will walk through the steps I used to deploy the Tanzu package for cert-manager, create a ClusterIssuer with my private certificate authority, and then install TAP using the custom issuer." 
 # there MUST be at least 1 tag listed or it will not render
 tags:
   - Tanzu
