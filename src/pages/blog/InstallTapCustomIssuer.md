@@ -1,6 +1,6 @@
 ---
 layout: $/layouts/post.astro
-title: "Creating a Custom ClusterIsser using a Private Certificate Authority for a Tanzu Application Platform 1.4 Installation"
+title: "Creating a Custom ClusterIssuer using a Private Certificate Authority for a Tanzu Application Platform 1.4 Installation"
 description: "Watch me interact with ChatGPT as it provides nuanced and detailed responses helping me configure a private self-signed CA for my Tanzu Application Platform, Kubernetes (minikube) and Harbor lab" 
 # there MUST be at least 1 tag listed or it will not render
 tags:
