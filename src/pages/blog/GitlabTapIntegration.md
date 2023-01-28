@@ -93,7 +93,7 @@ helm upgrade --install gitlab gitlab/gitlab -n gitlab -f gitlab-values.yaml
 
 At this point, all the main components of Gitlab should be installed. You can use standard kubectl commands to verify the various objects deployed correctly, for example I like the command `kubectl get all -n gitlab` to show a quick view of all the main things that were deployed and their status. 
 
-### Making the ingress options
+### Making the Ingress objects
 
 Now since I opted not to deploy the Ingresses with the gitlab helm chart, I needed to create some ingress manifests. But, its somewhere between hard and impossible to just look at existing service deployments and know what needs an ingress, there are a lot of web services in most applications that are only exposed within the cluster and not intended to be exposed externally. 
 
@@ -174,7 +174,7 @@ spec:
       - gitlab.example.com
       secretName: gitlab-gitlab-tls
 ```
-This is pretty close to the object I want to create. I have already created ingress objects for Contour in the past so I know they work fine for my purposes with a minimal configuration, so I can remove nearly most of the labels and annotations. One thing to be cautious about here is in many cases labels are used as criteria for forwarding important traffic between services, so arbitrarily removing labels can have unexpected consequences if you aren't careful. Fortunately in my case since these are ingress objects, I only need to be concerned with which objects I am forwarding traffic to as the only inbound traffic is from external sources. 
+This is pretty close to the object I want to create. I have already created ingress objects for Contour in the past so I know they work fine for my purposes with a minimal configuration, so I can remove most of the labels and annotations. One thing to be cautious about here is in many cases labels are used as criteria for forwarding important traffic between services, so arbitrarily removing labels can have unexpected consequences if you aren't careful. Fortunately in my case since these are ingress objects, I only need to be concerned with which objects I am forwarding traffic to as the only inbound traffic is from external sources. 
 
 I also needed to update the cert-manager annotation to match my issuer type and name. 
 
@@ -281,7 +281,7 @@ So it turns out in this case, the Tanzu Package for Contour does not provide a s
 The first step is to create a secret with some ytt commands that includes the additional configuration settings we would like to patch in our envoy config:
 ```sh
 # Create a manifest for the config secret
-cat <<EOF > "/${ovathetap_home}/config/envoy-gitlab-ssh-config.yaml"
+cat <<EOF > envoy-gitlab-ssh-config.yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -301,7 +301,7 @@ stringData:
           targePort: gitlab-shell
 EOF
 # deploy the secret in your kubernetes cluster:
-kubectl create -f "/${ovathetap_home}/config/envoy-gitlab-ssh-config.yaml"
+kubectl create -f envoy-gitlab-ssh-config.yaml
 ```
 
 Next you will need to add a section to your tap values file so that it includes this secret when it deploys the configured Tanzu packages. I will only include the section you need to add to the file here, but you can view the [full tap-values file on the ovathetap repo](https://github.com/afewell/ovathetap/blob/main/assets/tap-values-2.yaml.template) if you would like to see the entire file. Here is the config you would need to add:
@@ -363,14 +363,14 @@ kubectl get secrets -n gitlab gitlab-gitlab-initial-root-password -o jsonpath={.
 
 Once you have the password value, you can open a browser to the url for your gitlab instance and login to the root account with this password. Once you login, you can navigate to the `Access Tokens` section on the `Settings` page and create a new token. Since this is just a basic lab environment, I was not concerned with what the minimum token scope could be, I just created a token with full access. After you create the token, gitlab will allow you to copy it, make sure you document it well because you will not be able to view the token value again. 
 
-You can easily use the web API to create a new oauth application, but I decided to create the oauth app using the gitlab API with the following commands:
+You can easily use the web GUI to create a new oauth application, but I decided to create the oauth app using the gitlab API with the following commands:
 ```sh
 create_oauth_app_response=$(curl -k --request POST --header "PRIVATE-TOKEN: ${gitlab_root_token}" \
      --data "name=tap&redirect_uri=https://tap-gui.tanzu.demo/api/auth/gitlab/handler/frame&scopes=api read_api read_user read_repository write_repository read_registry write_registry sudo openid profile email" \
      "https://gitlab.tanzu.demo/api/v4/applications")
 echo ${create_oauth_app_response} | yq -p json -o yaml | tee gitlab_oauth_app_config.yaml
 ```
-Much like with the access token, because this is a lab environment I created an oauth app that included every possible scope, but for a production environment you would want to be sure to figure out what the minimum needed scopes are when creating the oauth app. 
+Much like with the access token, because this is a lab environment I created an oauth app that included very broad scopes, but for a production environment you would want to be sure to figure out what the minimum needed scopes are when creating the oauth app. 
 
 You can also see in the above commands that I captured the json response from the api call, piped it to yq to format it for easier readability, and then saved the output to a file - you will want to make sure you document the output as it will have important values that you will need to configure the TAP integration. 
 
@@ -408,7 +408,7 @@ git commit -m "adding yelb catalog files"
 git push
 ```
 
-Once you have pushed the catalog to the repository, use your browser to visit the repository, click on the catalog-info.yaml file and copy the URL displayed. In this case we created a repository that can be accessed from inside this lab at https://gitlab.tanzu.demo/tanzu/tap-catalog, and while this url works its actually a vanity URL that gitlab creates and you want to use the real URL value which you copied, which should look like: https://gitlab.tanzu.demo/tanzu/tap-catalog/-/blob/main/catalog-info.yaml
+Once you have pushed the catalog to the repository, use your browser to visit the repository on the gitlab site, click on the catalog-info.yaml file and copy the URL displayed. In this case we created a repository that can be accessed from inside this lab at https://gitlab.tanzu.demo/tanzu/tap-catalog, and while this url works its actually a vanity URL that gitlab creates and you want to use the real URL value which you copied, which should look like: https://gitlab.tanzu.demo/tanzu/tap-catalog/-/blob/main/catalog-info.yaml
 
 #### Configure the tap values file for gitlab integration
 
@@ -453,4 +453,6 @@ After the TAP installation is updated, all the integrations should be working an
 In this installation we setup integrations that will enable several key use cases:
 1. Authentication: Your TAP installation will now require login, and will use GitLab as the authentication provider. 
 2. Catalog hosting: Your TAP catalog should now display the yelb catalog files.
-3. Automated Repo Creation: When deploying App Accelerators, TAP can automatically create gitlab repositories for the code to automate gitops. 
+3. Automated Repo Creation: When deploying App Accelerators, TAP can automatically create gitlab repositories for the code to automate gitops provisioning.
+
+Thats it! Thanks for reading!
