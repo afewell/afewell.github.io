@@ -67,9 +67,6 @@ nginx-ingress:
 prometheus:
   # defaultWas: true
   install: false  
-registry:
-  # defaultWas: true
-  enabled: false
 gitlab-runner:
   # defaultWas: true
   install: false  
@@ -84,6 +81,11 @@ After I made all the customizations I needed to, I saved the file as gitlab-valu
 ```sh
 # create gitlab namespace
 kubectl create ns gitlab
+# add docker hub login info for pulling minio chart
+docker login -u "${docker_account_username}" -p "${docker_account_password}"
+kubectl create secret generic myregistrykey \
+    --from-file=.dockerconfigjson="/home/${hostusername}/.docker/config.json" \
+    --type=kubernetes.io/dockerconfigjson -n gitlab
 # Install Gitlab helm chart
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update
@@ -134,7 +136,7 @@ helm template gitlab/gitlab -n gitlab -f gitlab-values.yaml
 
 Gitlab deploys a lot of kubernetes objects, so these will be very large files. The key piece of information I am looking for is the default Ingress options so I can see what Ingresses typically get created and what internal services the Ingresses need to forward traffic to.
 
-You can use the `find` feature in your IDE or text editor to look through the default manifests file searching for "kind: Ingress" and it will quickly take you to the Ingress files. By default there are 3 ingresses deployed, one for the main gitlab web service, one for minio, and one for registry. I excluded the registry from my deployment, so I needed to create manifests for the main webservice and minio. 
+You can use the `find` feature in your IDE or text editor to look through the default manifests file searching for "kind: Ingress" and it will quickly take you to the Ingress files. By default there are 4 ingresses deployed for the following services, gitlab-webservice, minio, kas, and registry. 
 
 Here is the standard Ingress for the gitlab webservice created by the default helm deployment:
 ```yaml
@@ -178,8 +180,8 @@ This is pretty close to the object I want to create. I have already created ingr
 
 I also needed to update the cert-manager annotation to match my issuer type and name. 
 
-There was one other challenge I ran into ... the default Ingress objects were formatted for the `extensions/v1beta1` api, and I am running kubernetes version 1.25.3 which requires that Ingress objects use the `networking.k8s.io/v1` API, which also requires a different format for the spec. I did notice afterwards that the gitlab helm values chart has a `global.ingress.apiVersion` value that can be set, and so I assume if I had set that it would have generated the manifest in the correct format, but rather than regenerating the manifests I just looked at the kubernetes Ingress documentation as a reference and updated the manifest accordingly, here is the updated manifest I used:
-```sh
+There was one other challenge I ran into ... the default Ingress objects were formatted for the `extensions/v1beta1` api, and I am running kubernetes version 1.25.3 which requires that Ingress objects use the `networking.k8s.io/v1` API, which also requires a different format for the spec. I did notice afterwards that the gitlab helm values chart has a `global.ingress.apiVersion` value that can be set, and so I assume if I had set that it may have generated the manifest in the correct format, but rather than regenerating the manifests I just looked at the kubernetes Ingress documentation as a reference and updated the manifest accordingly, here is the updated manifest I used:
+```yaml
 apiVersion: networking.k8s.io/v1 
 kind: Ingress
 metadata:
@@ -209,7 +211,7 @@ spec:
       secretName: gitlab-gitlab-tls
 ```
 
-I also did the same thing for the minio ingress object, deployed the files, and then logged into the gitlab web interface and everything worked great. 
+I also did the same thing for each of the other ingress objects, deployed the files, and then logged into the gitlab web interface and everything worked great. If you would like to see the all of the final ingress object yamls you can [see them in the ovathetap repo here](https://github.com/afewell/ovathetap/blob/main/assets/gitlab-ingresses.yaml).
 
 ### Adding SSH support
 
