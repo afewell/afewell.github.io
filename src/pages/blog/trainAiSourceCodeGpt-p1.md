@@ -19,7 +19,7 @@ authorTwitter: afewell
 date: 2023-2-14T08:00:18.276Z
 ---
 
-I created a video on this same topic with some additional details, [please check it out here](https://www.youtube.com/watch?v=QLm5irtOXmg)!
+I also created a video on this same topic with some additional details, [please check it out here](https://www.youtube.com/watch?v=QLm5irtOXmg)!
 
 Like many of us, Ive been really swept up by the whole ChatGPT craze. It's inspiring me to dive deeper into machine learning. Just since ChatGPT launched I have already taken a few courses in machine learning and AI and its been a fun and humbling experience. Machine learning is an extremely deep subject that is filled with really complex math. Fortunately I had some background from grad school doing similar math so I am not completely lost, but I think perhaps a more important realization for me was how ChatGPT itself dramatically changes the process of technology transfer for the dissimination of machine learning as it grows. 
 
