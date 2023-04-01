@@ -28,28 +28,6 @@ In the prompt below, you can see I provided 2 examples to show the type of data 
 
 ## The Prompt:
 ````
-Command: `tanzu apps clustersupplychain list`
-Example Usage:
-```sh
-tanzu apps clustersupplychain list
-NAME                 READY   AGE
-basic-image-to-url   Ready   11d
-source-to-url        Ready   11d
-```
-Command: `tanzu apps clustersupplychain get SUPPLYCHAIN-NAME`
-Example Usage:
-```sh
-tanzu apps cluster-supply-chain get source-to-url
----
-# source-to-url: Ready
----
-Supply Chain Selectors
-   TYPE          KEY                                   OPERATOR   VALUE
-   expressions   apps.tanzu.vmware.com/workload-type   In         web
-   expressions   apps.tanzu.vmware.com/workload-type   In         server
-   expressions   apps.tanzu.vmware.com/workload-type   In         worker
-```
-
 Example:
 ---###---
 Command: `tanzu apps clustersupplychain list`
@@ -354,9 +332,6 @@ Identify the pattern and format shown in the example. Examine the contexts for c
 ````
 ### The Response
 ````
-Here is the response from chat gpt:
-------
-
 Command: tanzu apps clustersupplychain list
 Example Usage:
 
