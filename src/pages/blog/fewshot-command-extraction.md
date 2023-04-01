@@ -26,7 +26,8 @@ I used gpt-3.5-turbo for this as it gave me equally good results as gpt4 for thi
 
 In the prompt below, you can see I provided 2 examples to show the type of data I wanted, the context is a cut and paste of the relevant documentation, and then I played with the query at the bottom until I got it to send me the response I wanted. Note that I used the string "---###---" as a dilemeter because I have a lot of special characters in my prompt, and this delimeter is not used in the content I am providing in the prompt. 
 
-### The Prompt:
+## The Prompt:
+````
 Command: `tanzu apps clustersupplychain list`
 Example Usage:
 ```sh
@@ -350,9 +351,9 @@ tanzu apps workload get tanzu-java-web-app -n development
 To see logs: "tanzu apps workload tail tanzu-java-web-app --namespace development --timestamp 
 ---###---
 Identify the pattern and format shown in the example. Examine the contexts for commands and example usage patterns, like what is shown in the example. Your response should only include the Command and Example usage for each relevant item you found in the context. Your response should be formatted exactly the same way as the example, and your response should not include any other details. 
-
-
+````
 ### The Response
+````
 Here is the response from chat gpt:
 ------
 
@@ -385,5 +386,4 @@ Context:
 The tanzu apps clustersupplychain list command retrieves the list of all the ClusterSupplyChain objects in the current context.
 
 The tanzu apps clustersupplychain get SUPPLYCHAIN-NAME command retrieves the detailed information about a specific ClusterSupplyChain object identified by the SUPPLYCHAIN-NAME. The output includes the Supply Chain Selectors which are a set of Kubernetes selectors that specify the criteria for matching workloads to a supply chain.
-
-
+````
