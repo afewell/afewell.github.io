@@ -17,6 +17,8 @@ date: 2023-07-24T08:00:18.276Z
 
 A well-documented project is like a well-oiled machine. It's vital for smooth collaboration and efficiency. But documentation can be time-consuming, especially when we're also racing against the clock to push out features and updates. Thankfully, I've stumbled upon a solution to this challenge that I am thrilled to share with you. It's a nifty little combination of semantic release and GitHub projects.
 
+Before I go further I should mention I also created a demo video that shows the solution discussed here, [you can find it here](https://youtu.be/JT-THsrR04M).
+
 First off, let's look at the project I'll be using as an example today. It's a chatbot project that I've developed as an accelerator, which is a kind of template that people can download, iterate on and then build. I also set this up so that the accelerator itself is versioned and when developers use this accelerator to create their own implementations, it sets up automated versioning for their new projects. 
 
 Now, here's where the magic happens. When you make your commits, leave useful commit messages. Semantic version will automatically generates a tidy changelog for you.
