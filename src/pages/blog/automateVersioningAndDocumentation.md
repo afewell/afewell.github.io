@@ -23,7 +23,7 @@ First off, let's look at the project I'll be using as an example today. It's a c
 
 Now, here's where the magic happens. When you make your commits, leave useful commit messages. Semantic version will automatically generates a tidy changelog for you.
 
-![Changelog](https://github.com/afewell/afewell.github.io/blob/main/public/images/changelog.png)
+![Changelog](https://raw.githubusercontent.com/afewell/afewell.github.io/blob/main/public/images/changelog.png)
 
 Observe that each commit is nicely organized along with the notes in the changelog, making it much easier to find exactly what changes were made, why and when. Further, issue tickets are nicely linked here as well, and when you leverage github projects you can easily combine planning with additional notes to provide a solid set of informal documentation for the fellow users of your project.
 
@@ -31,7 +31,8 @@ It doesn't just stop there— it also packages a release that encapsulates your 
 
 While these capabilities alone do a great job, combining semantic release with github projects can bring it to the next level.  Github projects offers multiple different views from the same dataset including kanban boards and a roadmap view, but my favorite has become their simple default task list view. 
 
-![Github Projects Task List](https://github.com/afewell/afewell.github.io/blob/main/public/images/projects_task_list.png)
+![Github Projects Task List](https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/projects_task_list.png
+)
 
 Here, you can plan out the next things you want to work on for your project very quickly and easily while ensuring that your rational and intent for planned changes is captured in your automated documentation. You can easily convert these tasks to issues, which can automatically be included in your changelog to provide additional documentation for each change made to your repo. I try to always create a project task for planned changes, even a simple note can become invaluable in any case where understanding the reason for a change becomes important, and if you make this a habit its quick, easy, and it can really simplify your commit messaging knowing that you can reference the project task you created during planning. 
 
