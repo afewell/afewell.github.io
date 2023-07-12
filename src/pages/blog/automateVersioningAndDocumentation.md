@@ -23,7 +23,7 @@ First off, let's look at the project I'll be using as an example today. It's a c
 
 Now, here's where the magic happens. When you make your commits, leave useful commit messages. Semantic version will automatically generates a tidy changelog for you.
 
-![Changelog](https://raw.githubusercontent.com/afewell/afewell.github.io/blob/main/public/images/changelog.png)
+![Changelog](https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/changelog.png)
 
 Observe that each commit is nicely organized along with the notes in the changelog, making it much easier to find exactly what changes were made, why and when. Further, issue tickets are nicely linked here as well, and when you leverage github projects you can easily combine planning with additional notes to provide a solid set of informal documentation for the fellow users of your project.
 
