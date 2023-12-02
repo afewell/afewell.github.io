@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-OSURTGVX">
+    <head>
+        <!-- Use Google Fonts, if you don't wanna prefer a self-hosted version --><!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet"> --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Art Fewell&#39;s Blog | Setting up Gitlab for my Tanzu Application Platform 1.4 Lab</title>
+    <meta name="title" content="Art Fewell's Blog | Setting up Gitlab for my Tanzu Application Platform 1.4 Lab">
+    <meta name="description" content="In this blog I will walk through the steps I used to plan, install, configure and integrate Gitlab with Tanzu Application Platform 1.4.0 in my lab environment.">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Open Graph Tags (Facebook) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Art Fewell's Blog | Setting up Gitlab for my Tanzu Application Platform 1.4 Lab">
+    
+    <meta property="og:description" content="In this blog I will walk through the steps I used to plan, install, configure and integrate Gitlab with Tanzu Application Platform 1.4.0 in my lab environment.">
+    
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Art Fewell's Blog | Setting up Gitlab for my Tanzu Application Platform 1.4 Lab">
+    
+    <meta property="twitter:description" content="In this blog I will walk through the steps I used to plan, install, configure and integrate Gitlab with Tanzu Application Platform 1.4.0 in my lab environment.">
+    
+
+    
+
+    <link rel="stylesheet" href="/assets/about.de9a8fb5.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.81cd968e.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.f11b79f2.css" /><script type="module" src="/hoisted.9c0718d3.js"></script></head>
+    <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div class="transition-colors">
+        <main class="mx-auto max-w-4xl px-4 md:px-0">
+            <style>astro-island,astro-slot{display:contents}</style><script>(self.Astro=self.Astro||{}).visible=(s,c,n)=>{const r=async()=>{await(await s())()};let i=new IntersectionObserver(e=>{for(const t of e)if(!!t.isIntersecting){i.disconnect(),r();break}});for(let e=0;e<n.children.length;e++){const t=n.children[e];i.observe(t)}},window.dispatchEvent(new Event("astro:visible"));var l;{const c={0:t=>t,1:t=>JSON.parse(t,o),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(JSON.parse(t,o)),5:t=>new Set(JSON.parse(t,o)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(JSON.parse(t)),9:t=>new Uint16Array(JSON.parse(t)),10:t=>new Uint32Array(JSON.parse(t))},o=(t,s)=>{if(t===""||!Array.isArray(s))return s;const[e,n]=s;return e in c?c[e](n):void 0};customElements.get("astro-island")||customElements.define("astro-island",(l=class extends HTMLElement{constructor(){super(...arguments);this.hydrate=()=>{if(!this.hydrator||this.parentElement&&this.parentElement.closest("astro-island[ssr]"))return;const s=this.querySelectorAll("astro-slot"),e={},n=this.querySelectorAll("template[data-astro-template]");for(const r of n){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(const r of s){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("name")||"default"]=r.innerHTML)}const a=this.hasAttribute("props")?JSON.parse(this.getAttribute("props"),o):{};this.hydrator(this)(this.Component,a,e,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),window.removeEventListener("astro:hydrate",this.hydrate),window.dispatchEvent(new CustomEvent("astro:hydrate"))}}connectedCallback(){!this.hasAttribute("await-children")||this.firstChild?this.childrenConnectedCallback():new MutationObserver((s,e)=>{e.disconnect(),this.childrenConnectedCallback()}).observe(this,{childList:!0})}async childrenConnectedCallback(){window.addEventListener("astro:hydrate",this.hydrate);let s=this.getAttribute("before-hydration-url");s&&await import(s),this.start()}start(){const s=JSON.parse(this.getAttribute("opts")),e=this.getAttribute("client");if(Astro[e]===void 0){window.addEventListener(`astro:${e}`,()=>this.start(),{once:!0});return}Astro[e](async()=>{const n=this.getAttribute("renderer-url"),[a,{default:r}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),i=this.getAttribute("component-export")||"default";if(!i.includes("."))this.Component=a[i];else{this.Component=a;for(const d of i.split("."))this.Component=this.Component[d]}return this.hydrator=r,this.hydrate},s,this)}attributeChangedCallback(){this.hydrator&&this.hydrate()}},l.observedAttributes=["props"],l))}</script><script>(self.Astro=self.Astro||{}).load=a=>{(async()=>await(await a())())()},window.dispatchEvent(new Event("astro:load"));</script><br class="my-4 astro-ZGKQLBXH"><header class="header astro-D4C5N2UC">
+    <div class="header__logo astro-D4C5N2UC">
+        <a href="/" class="avatar astro-D4C5N2UC">
+            <img class="header__logo-img astro-D4C5N2UC" src="/assets/mylogo.png" alt="Astro logo">
+        </a>
+    </div>
+    <div class="header__meta flex-1 astro-D4C5N2UC">
+        <h3 class="header__title dark:text-theme-dark-secondary astro-D4C5N2UC">
+            <a href="" class="astro-D4C5N2UC">Art Fewell&#39;s Blog</a>
+        </h3>
+        <div class="header__meta-more flex astro-D4C5N2UC">
+            <p class="header__desc dark:text-sky-200 astro-D4C5N2UC">
+                This site provides words, sentences, and paragraphs - all at no extra charge
+            </p>
+            <nav class="header__nav flex astro-D4C5N2UC">
+                <ul class="header__ref-list astro-D4C5N2UC">
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="27S3Gs" component-url="/SearchBtn.6c92d9d3.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;SearchBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2071 4.89344C19.0923 7.77862 19.3131 12.3193 16.8693 15.4578C16.8846 15.4713 16.8996 15.4854 16.9143 15.5L21.1569 19.7427C21.5474 20.1332 21.5474 20.7664 21.1569 21.1569C20.7664 21.5474 20.1332 21.5474 19.7427 21.1569L15.5 16.9143C15.4854 16.8996 15.4713 16.8846 15.4578 16.8693C12.3193 19.3131 7.77862 19.0923 4.89344 16.2071C1.76924 13.083 1.76924 8.01763 4.89344 4.89344C8.01763 1.76924 13.083 1.76924 16.2071 4.89344ZM14.7929 14.7929C17.1361 12.4498 17.1361 8.6508 14.7929 6.30765C12.4498 3.96451 8.6508 3.96451 6.30765 6.30765C3.96451 8.6508 3.96451 12.4498 6.30765 14.7929C8.6508 17.1361 12.4498 17.1361 14.7929 14.7929Z" fill="currentColor"></path></svg></button></astro-island>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" class="astro-D4C5N2UC"></path>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="/rss.xml" title="RSS" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" class="astro-D4C5N2UC"></path><path d="M4 4a16 16 0 0 1 16 16" class="astro-D4C5N2UC"></path><circle cx="5" cy="19" r="1" class="astro-D4C5N2UC"></circle>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="ZE0Bkh" component-url="/ModeSwitcherBtn.39e589ad.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;ModeSwitcherBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button></astro-island>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<nav class="nav py-3 astro-TATTABV7">
+    <ul class="nav-list dark:text-theme-dark-secondary astro-TATTABV7">
+         <li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/" title="home">Home</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/blog" title="blog">Blog</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/tags" title="tags">Tags</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/about" title="about">About</a>
+            </li>
+    </ul>
+</nav>
+<div class="content astro-ZGKQLBXH">
+        <div class="post__header astro-OSURTGVX">
+            <div class="post__tags astro-OSURTGVX">
+                <a class="post__tag astro-OSURTGVX" href="/tags/Tanzu" title="Tanzu">Tanzu</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu Application Platform" title="Tanzu Application Platform">Tanzu Application Platform</a><a class="post__tag astro-OSURTGVX" href="/tags/Gitlab" title="Gitlab">Gitlab</a><a class="post__tag astro-OSURTGVX" href="/tags/Cert-Manager" title="Cert-Manager">Cert-Manager</a><a class="post__tag astro-OSURTGVX" href="/tags/Platform Engineering" title="Platform Engineering">Platform Engineering</a><a class="post__tag astro-OSURTGVX" href="/tags/Kubernetes" title="Kubernetes">Kubernetes</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu Packages" title="Tanzu Packages">Tanzu Packages</a><a class="post__tag astro-OSURTGVX" href="/tags/Certificates" title="Certificates">Certificates</a><a class="post__tag astro-OSURTGVX" href="/tags/Private Certificate Authority" title="Private Certificate Authority">Private Certificate Authority</a><a class="post__tag astro-OSURTGVX" href="/tags/OvaTheTap" title="OvaTheTap">OvaTheTap</a><a class="post__tag astro-OSURTGVX" href="/tags/Backstage" title="Backstage">Backstage</a><a class="post__tag astro-OSURTGVX" href="/tags/Spotify Backstage" title="Spotify Backstage">Spotify Backstage</a>
+            </div>
+            <h1 class="post__title astro-OSURTGVX">Setting up Gitlab for my Tanzu Application Platform 1.4 Lab</h1>
+            <h5 class="post__desc astro-OSURTGVX">
+                <a class="post__author astro-OSURTGVX" href="https://twitter.com/afewell" title="Art Fewell's twitter" target="_blank" rel="external">Art Fewell</a> |
+                <span class="post__date astro-OSURTGVX">Friday, January 27, 2023</span>
+            </h5>
+        </div><article class="prose dark:prose-dark astro-TE7CUYU6">
+    <p>Tanzu Application Platform (TAP) 1.4 has some cool integrations with Github and Gitlab. While I have my public TAP environment integrated with GitHub, today I am working on updating my <a href="https://github.com/afewell/ovathetap">ovathetap</a> project, which implements TAP on a single node lab environment. I intend to use this lab for different trainings and want to keep it self contained so while its always an option, people would not need to use their own credentials to have a complete experience in the lab environment.</p>
+<p>I have also been wanting to use gitlab in a lab environment for years just to get some more experience with it and be able to offer insight for the many many enterprise customers who use gitlab - the only reason I havent sooner is because I often build labs where having as low footprint as possible is a key goal and using as much SaaS as possible is a benefit, which has resulted in almost all my git experience being on github.</p>
+<p>So I was excited to learn about it and am pleased to report it was a pretty elegant experience, if you come from a background working with GitHub, it is true that Gitlab has some differences so you have to adapt some, but its pretty straightforward and well documented. Another nice benefit which I think will become a really important criteria soon is, ChatGPT is pretty knowledgable with it and I was able to get some decent help to speed me through some questions I had during my setup … keep an eye out for another blog on that topic specifically as its a bit too much to detail in this post with all the other things I am trying to cover here.</p>
+<h2 id="the-plan">The Plan</h2>
+<p>Since this is a single node lab environment, the first thing I wanted to do was to slim down the default gitlab configuration to make it as light as I can. Gitlab has a lot of really cool features that I may add someday if I need them, but for the time being I only need the basic git serving and authentication services. This can be done pretty easily by going through the helm charts and the installation documentation.</p>
+<p>The Gitlab helm chart also by default deploys an ingress controller and cert-manager, and in many cases that is great, it allows you to get a fully functional environment just by deploying the helm chart. But in my case I already have the Contour ingress controller and cert-manager up and running with my TAP installation, and so to keep things slim I will update the Gitlab helm chart values to skip the ingress controller and cert manager installations. This also means it will not provision the ingress resources for gitlab services, so I will create the ingress objects needed for gitlab and apply them seperately.</p>
+<p>I should note that in many cases where you have plentiful resources I dont think there is any problem using the default gitlab helm chart even if you are also using other ingress controllers, and I dont think there is any other benefit from having TAP and gitlab share the same ingress controller, the only reason for doing this in my case is to keep things extra slim given its for a single node environment.</p>
+<p>Once I get gitlab deployed, I will create admin and developer accounts and create a group and repository that I will use to store the “yelb” catalog that is available with tap and provides some example catalog content.</p>
+<p>I will then configure the tap-values file to setup integration with gitlab for authentication services, to access the tap-catalog, and also so that TAP can automate creation of a repository for users of TAP Application Accelerators.</p>
+<h2 id="part-1-customizing-and-deploying-the-gitlab-helm-chart">Part 1: Customizing and deploying the Gitlab helm chart</h2>
+<p>Gitlab has a pretty large helm values chart, but its well organized and getting through it isnt too bad if youve had some experience with helm values charts before.</p>
+<p>Its a really long chart so I will only put the sections that I changed here, but if you want to see the entire chart, <a href="https://github.com/afewell/ovathetap/blob/main/assets/gitlab-values.yaml">you can view it here</a>.</p>
+<p>Here are the sections I modified from the default helm values chart:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">global:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #8B949E"># defaultWas: ee</span></span>
+<span class="line"><span style="color: #C9D1D9">  edition: ce</span></span>
+<span class="line"><span style="color: #C9D1D9">  hosts:</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #8B949E"># defaultWas example.com</span></span>
+<span class="line"><span style="color: #C9D1D9">    domain: tanzu.demo</span></span>
+<span class="line"><span style="color: #C9D1D9">  ingress:</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #8B949E"># defaultWas: true</span></span>
+<span class="line"><span style="color: #C9D1D9">    configureCertmanager: </span><span style="color: #79C0FF">false</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #8B949E"># defaultWas: true</span></span>
+<span class="line"><span style="color: #C9D1D9">    enabled: </span><span style="color: #79C0FF">false</span></span>
+<span class="line"><span style="color: #C9D1D9">certmanager:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #8B949E"># defaultWas: true</span></span>
+<span class="line"><span style="color: #C9D1D9">  installCRDs: </span><span style="color: #79C0FF">false</span></span>
+<span class="line"><span style="color: #C9D1D9">nginx-ingress:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #8B949E"># defaultWas: true</span></span>
+<span class="line"><span style="color: #C9D1D9">  enabled: </span><span style="color: #79C0FF">false</span></span>
+<span class="line"><span style="color: #C9D1D9">prometheus:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #8B949E"># defaultWas: true</span></span>
+<span class="line"><span style="color: #C9D1D9">  install: </span><span style="color: #79C0FF">false</span><span style="color: #C9D1D9">  </span></span>
+<span class="line"><span style="color: #C9D1D9">gitlab-runner:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #8B949E"># defaultWas: true</span></span>
+<span class="line"><span style="color: #C9D1D9">  install: </span><span style="color: #79C0FF">false</span><span style="color: #C9D1D9">  </span></span>
+<span class="line"><span style="color: #C9D1D9">minio:</span></span>
+<span class="line"><span style="color: #8B949E"># This minio customization is not in the default chart, but easily found in the gitlab docs</span></span>
+<span class="line"><span style="color: #C9D1D9">  pullSecrets:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - name: myregistrykey</span></span></code></pre>
+<p>After I made all the customizations I needed to, I saved the file as gitlab-values.yaml and proceeded with deploying the helm chart:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #8B949E"># create gitlab namespace</span></span>
+<span class="line"><span style="color: #C9D1D9">kubectl create ns gitlab</span></span>
+<span class="line"><span style="color: #8B949E"># add docker hub login info for pulling minio chart</span></span>
+<span class="line"><span style="color: #C9D1D9">docker login -u </span><span style="color: #A5D6FF">"</span><span style="color: #C9D1D9">${docker_account_username}</span><span style="color: #A5D6FF">"</span><span style="color: #C9D1D9"> -p </span><span style="color: #A5D6FF">"</span><span style="color: #C9D1D9">${docker_account_password}</span><span style="color: #A5D6FF">"</span></span>
+<span class="line"><span style="color: #C9D1D9">kubectl create secret generic myregistrykey \</span></span>
+<span class="line"><span style="color: #C9D1D9">    --from-file=.dockerconfigjson=</span><span style="color: #A5D6FF">"/home/</span><span style="color: #C9D1D9">${hostusername}</span><span style="color: #A5D6FF">/.docker/config.json"</span><span style="color: #C9D1D9"> \</span></span>
+<span class="line"><span style="color: #C9D1D9">    --type=kubernetes.io/dockerconfigjson -n gitlab</span></span>
+<span class="line"><span style="color: #8B949E"># Install Gitlab helm chart</span></span>
+<span class="line"><span style="color: #C9D1D9">helm repo add gitlab https://charts.gitlab.io/</span></span>
+<span class="line"><span style="color: #C9D1D9">helm repo update</span></span>
+<span class="line"><span style="color: #8B949E"># Install Gitlab</span></span>
+<span class="line"><span style="color: #C9D1D9">helm upgrade --install gitlab gitlab/gitlab -n gitlab -f gitlab-values.yaml</span></span></code></pre>
+<p>At this point, all the main components of Gitlab should be installed. You can use standard kubectl commands to verify the various objects deployed correctly, for example I like the command <code>kubectl get all -n gitlab</code> to show a quick view of all the main things that were deployed and their status.</p>
+<h3 id="making-the-ingress-objects">Making the Ingress objects</h3>
+<p>Now since I opted not to deploy the Ingresses with the gitlab helm chart, I needed to create some ingress manifests. But, its somewhere between hard and impossible to just look at existing service deployments and know what needs an ingress, there are a lot of web services in most applications that are only exposed within the cluster and not intended to be exposed externally.</p>
+<p>A nice trick to find the info you need for your ingress objects is to use helm to generate a file with all the kubernetes objects it would have created with the default install. Helm has 2 options to provide this type of info, you can use the <code>helm install</code> command with the <code>--dry-run</code> flag, or you can use the <code>helm template</code> command. The key difference is that the helm install —dry-run option peforms a simulated install on your cluster to try to validate for any conditions that might be experienced during installation, whereas the helm template command will still validate your configuration against a set of rules to ensure it generates valid yaml, but it does not check or validate anything on your cluster.</p>
+<p>For reference, I generated both a file with all the kubernetes manifests that would have been included with a default helm chart installation, and I also generated a file with all the manifests using the values file I created to be a simple reference with all the details for everything I installed with my installation.</p>
+<p>When you use the helm template command, while it doesnt check your cluster, it does ensure that you have entered the minimum required values for the default installation … so you can’t just enter the command like <code>helm template gitlab/gitlab</code> as that does not set the minimum required values. Fortunately the documentation has a nice reference for a standard syntax that includes setting the required values:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #8B949E"># This is the exact install reference from the docs https://docs.gitlab.com/charts/installation/deployment.html</span></span>
+<span class="line"><span style="color: #C9D1D9">helm repo add gitlab https://charts.gitlab.io/</span></span>
+<span class="line"><span style="color: #C9D1D9">helm repo update</span></span>
+<span class="line"><span style="color: #C9D1D9">helm upgrade --install gitlab gitlab/gitlab \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --timeout 600s \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set global.hosts.domain=example.com \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set global.hosts.externalIP=10.10.10.10 \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set certmanager-issuer.email=me@example.com \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set postgresql.image.tag=13.6.0</span></span></code></pre>
+<p>You can simply add the —dry-run flag to the above command to generate the yaml files for the objects that are created. Its often desirable to get this information in the planning phase before you do you gitlab install, and if gitlab isnt installed yet, the above command won’t work, but you can use the <code>helm template</code> command like this:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">helm repo add gitlab https://charts.gitlab.io/</span></span>
+<span class="line"><span style="color: #C9D1D9">helm repo update</span></span>
+<span class="line"><span style="color: #C9D1D9">helm template gitlab/gitlab \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --timeout 600s \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set global.hosts.domain=example.com \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set global.hosts.externalIP=10.10.10.10 \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set certmanager-issuer.email=me@example.com \</span></span>
+<span class="line"><span style="color: #C9D1D9">  --set postgresql.image.tag=13.6.0</span></span></code></pre>
+<p>And then to generate a copy of the manifests for the objects that get installed when using my custom values file:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">helm install gitlab gitlab/gitlab -n gitlab -f gitlab-values.yaml --dry-run</span></span>
+<span class="line"><span style="color: #8B949E"># or if you have not yet installed gitlab in your cluster:</span></span>
+<span class="line"><span style="color: #C9D1D9">helm template gitlab/gitlab -n gitlab -f gitlab-values.yaml</span></span></code></pre>
+<p>Gitlab deploys a lot of kubernetes objects, so these will be very large files. The key piece of information I am looking for is the default Ingress options so I can see what Ingresses typically get created and what internal services the Ingresses need to forward traffic to.</p>
+<p>You can use the <code>find</code> feature in your IDE or text editor to look through the default manifests file searching for “kind: Ingress” and it will quickly take you to the Ingress files. By default there are 4 ingresses deployed for the following services, gitlab-webservice, minio, kas, and registry.</p>
+<p>Here is the standard Ingress for the gitlab webservice created by the default helm deployment:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #8B949E"># Source: gitlab/charts/gitlab/charts/webservice/templates/ingress.yaml</span></span>
+<span class="line"><span style="color: #7EE787">apiVersion</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">extensions/v1beta1</span></span>
+<span class="line"><span style="color: #7EE787">kind</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">Ingress</span></span>
+<span class="line"><span style="color: #7EE787">metadata</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">name</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab-webservice-default</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">namespace</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">default</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">labels</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">app</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">webservice</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">chart</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">webservice-6.7.5</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">release</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">heritage</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">Helm</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">gitlab.com/webservice-name</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">default</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">annotations</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">kubernetes.io/ingress.class</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab-nginx</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">kubernetes.io/ingress.provider</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">"nginx"</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">nginx.ingress.kubernetes.io/proxy-body-size</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">"512m"</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">nginx.ingress.kubernetes.io/proxy-read-timeout</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">"600"</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">nginx.ingress.kubernetes.io/proxy-connect-timeout</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">"15"</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">cert-manager.io/issuer</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">"gitlab-issuer"</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">nginx.ingress.kubernetes.io/service-upstream</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">"true"</span></span>
+<span class="line"><span style="color: #7EE787">spec</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">rules</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    - </span><span style="color: #7EE787">host</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab.example.com</span></span>
+<span class="line"><span style="color: #C9D1D9">      </span><span style="color: #7EE787">http</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">        </span><span style="color: #7EE787">paths</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">          - </span><span style="color: #7EE787">path</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">/</span></span>
+<span class="line"><span style="color: #C9D1D9">            </span><span style="color: #7EE787">backend</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">              </span><span style="color: #7EE787">serviceName</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab-webservice-default</span></span>
+<span class="line"><span style="color: #C9D1D9">              </span><span style="color: #7EE787">servicePort</span><span style="color: #C9D1D9">: </span><span style="color: #79C0FF">8181</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">tls</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    - </span><span style="color: #7EE787">hosts</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">      - </span><span style="color: #A5D6FF">gitlab.example.com</span></span>
+<span class="line"><span style="color: #C9D1D9">      </span><span style="color: #7EE787">secretName</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab-gitlab-tls</span></span></code></pre>
+<p>This is pretty close to the object I want to create. I have already created ingress objects for Contour in the past so I know they work fine for my purposes with a minimal configuration, so I can remove most of the labels and annotations. One thing to be cautious about here is in many cases labels are used as criteria for forwarding important traffic between services, so arbitrarily removing labels can have unexpected consequences if you aren’t careful. Fortunately in my case since these are ingress objects, I only need to be concerned with which objects I am forwarding traffic to as the only inbound traffic is from external sources.</p>
+<p>I also needed to update the cert-manager annotation to match my issuer type and name.</p>
+<p>There was one other challenge I ran into … the default Ingress objects were formatted for the <code>extensions/v1beta1</code> api, and I am running kubernetes version 1.25.3 which requires that Ingress objects use the <code>networking.k8s.io/v1</code> API, which also requires a different format for the spec. I did notice afterwards that the gitlab helm values chart has a <code>global.ingress.apiVersion</code> value that can be set, and so I assume if I had set that it may have generated the manifest in the correct format, but rather than regenerating the manifests I just looked at the kubernetes Ingress documentation as a reference and updated the manifest accordingly, here is the updated manifest I used:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #7EE787">apiVersion</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">networking.k8s.io/v1</span><span style="color: #C9D1D9"> </span></span>
+<span class="line"><span style="color: #7EE787">kind</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">Ingress</span></span>
+<span class="line"><span style="color: #7EE787">metadata</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">name</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab-webservice-default</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">namespace</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">labels</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">app</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">webservice</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">release</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">gitlab.com/webservice-name</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">default</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">annotations</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #7EE787">cert-manager.io/cluster-issuer</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">"my-ca-issuer"</span></span>
+<span class="line"><span style="color: #7EE787">spec</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">rules</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    - </span><span style="color: #7EE787">host</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab.tanzu.demo</span></span>
+<span class="line"><span style="color: #C9D1D9">      </span><span style="color: #7EE787">http</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">        </span><span style="color: #7EE787">paths</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">          - </span><span style="color: #7EE787">path</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">/</span></span>
+<span class="line"><span style="color: #C9D1D9">            </span><span style="color: #7EE787">pathType</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">Prefix</span></span>
+<span class="line"><span style="color: #C9D1D9">            </span><span style="color: #7EE787">backend</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">              </span><span style="color: #7EE787">service</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">                </span><span style="color: #7EE787">name</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab-webservice-default</span></span>
+<span class="line"><span style="color: #C9D1D9">                </span><span style="color: #7EE787">port</span><span style="color: #C9D1D9">: </span></span>
+<span class="line"><span style="color: #C9D1D9">                  </span><span style="color: #7EE787">number</span><span style="color: #C9D1D9">: </span><span style="color: #79C0FF">8181</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #7EE787">tls</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">    - </span><span style="color: #7EE787">hosts</span><span style="color: #C9D1D9">:</span></span>
+<span class="line"><span style="color: #C9D1D9">      - </span><span style="color: #A5D6FF">gitlab.tanzu.demo</span></span>
+<span class="line"><span style="color: #C9D1D9">      </span><span style="color: #7EE787">secretName</span><span style="color: #C9D1D9">: </span><span style="color: #A5D6FF">gitlab-gitlab-tls</span></span></code></pre>
+<p>I also did the same thing for each of the other ingress objects, deployed the files, and then logged into the gitlab web interface and everything worked great. If you would like to see the all of the final ingress object yamls you can <a href="https://github.com/afewell/ovathetap/blob/main/assets/gitlab-ingresses.yaml">see them in the ovathetap repo here</a>.</p>
+<h3 id="adding-ssh-support">Adding SSH support</h3>
+<p>Another key consideration I almost missed is for <code>ssh</code> support which is not supported by ingresses and so the configuration is typically found in the loadBalancer service that is configured to forward web traffic to the ingress and ssh traffic directly to the recieving service, which for gitlab is the gitlab-shell service. The default gitlab chart installs an nginx loadbalancer service, so we can look at the sample default object files we created to see what the default load balancer configuration would have been, which we can then use to update the envoy configuration in our contour deployment. Here is the default gitlab chart loadbalancer config:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">spec:</span></span>
+<span class="line"><span style="color: #C9D1D9">  type: LoadBalancer</span></span>
+<span class="line"><span style="color: #C9D1D9">  loadBalancerIP: 10.10.10.10</span></span>
+<span class="line"><span style="color: #C9D1D9">  externalTrafficPolicy: Local</span></span>
+<span class="line"><span style="color: #C9D1D9">  ipFamilyPolicy: SingleStack</span></span>
+<span class="line"><span style="color: #C9D1D9">  ipFamilies: </span></span>
+<span class="line"><span style="color: #C9D1D9">    - IPv4</span></span>
+<span class="line"><span style="color: #C9D1D9">  ports:</span></span>
+<span class="line"><span style="color: #C9D1D9">    - name: http</span></span>
+<span class="line"><span style="color: #C9D1D9">      port: 80</span></span>
+<span class="line"><span style="color: #C9D1D9">      protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">      targetPort: http</span></span>
+<span class="line"><span style="color: #C9D1D9">    - name: https</span></span>
+<span class="line"><span style="color: #C9D1D9">      port: 443</span></span>
+<span class="line"><span style="color: #C9D1D9">      protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">      targetPort: https</span></span>
+<span class="line"><span style="color: #C9D1D9">    - name: gitlab-shell</span></span>
+<span class="line"><span style="color: #C9D1D9">      port: 22</span></span>
+<span class="line"><span style="color: #C9D1D9">      protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">      targetPort: gitlab-shell</span></span></code></pre>
+<p>For reference, here is the envoy load balancer config from a default TAP full profile installaion in my lab environment:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">spec:</span></span>
+<span class="line"><span style="color: #C9D1D9">  type: LoadBalancer</span></span>
+<span class="line"><span style="color: #C9D1D9">  allocateLoadBalancerNodePorts: </span><span style="color: #79C0FF">true</span></span>
+<span class="line"><span style="color: #C9D1D9">  clusterIP: 10.101.48.192</span></span>
+<span class="line"><span style="color: #C9D1D9">  clusterIPs:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - 10.101.48.192</span></span>
+<span class="line"><span style="color: #C9D1D9">  externalTrafficPolicy: Cluster</span></span>
+<span class="line"><span style="color: #C9D1D9">  internalTrafficPolicy: Cluster</span></span>
+<span class="line"><span style="color: #C9D1D9">  ipFamilies:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - IPv4</span></span>
+<span class="line"><span style="color: #C9D1D9">  ipFamilyPolicy: SingleStack</span></span>
+<span class="line"><span style="color: #C9D1D9">  ports:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - name: http</span></span>
+<span class="line"><span style="color: #C9D1D9">    nodePort: 30788</span></span>
+<span class="line"><span style="color: #C9D1D9">    port: 80</span></span>
+<span class="line"><span style="color: #C9D1D9">    protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">    targetPort: 8080</span></span>
+<span class="line"><span style="color: #C9D1D9">  - name: https</span></span>
+<span class="line"><span style="color: #C9D1D9">    nodePort: 30148</span></span>
+<span class="line"><span style="color: #C9D1D9">    port: 443</span></span>
+<span class="line"><span style="color: #C9D1D9">    protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">    targetPort: 8443</span></span>
+<span class="line"><span style="color: #C9D1D9">  selector:</span></span>
+<span class="line"><span style="color: #C9D1D9">    app: envoy</span></span>
+<span class="line"><span style="color: #C9D1D9">    kapp.k14s.io/app: </span><span style="color: #A5D6FF">"1674530114656710890"</span></span>
+<span class="line"><span style="color: #C9D1D9">  sessionAffinity: None</span></span></code></pre>
+<p>So we can see by comparing these 2 configurations, I need to update my envoy manifest with  a port configuration for ssh forwarding.</p>
+<p>In my lab environment, the Contour ingress controller is deployed as a Tanzu Package which uses Carvel packaging. This is in many ways similar to helm with one powerful improvment - the Tanzu Package uses the Carvel kapp-controller to reconcile your configured/desired state with the actual running state on your kubernetes cluster. This ensures that if your running configuration ever deviates from your configured/desired configuration, kapp-controller will automatically try to fix the issue and bring your running configuration back to desired state. Whereas with helm, once you deploy your application, it will do nothing on its own to ensure your running configuration stays in the desired state.</p>
+<p>While this is awesome, it also means we cannot just make arbitrary changes to running objects or kapp-controller will overwrite them. You have to update your deployment manifests so the kapp-controller has the correct desired configuration.</p>
+<p>In most cases this is done by simply updating the values file you use with your deployment - this aspect is exactly the same whether using helm or a Tanzu/Carvel package. Both Helm and Carvel make packages that deploy applications with dozens of objects with hundreds or thousands of line of configuration, and allows you to customize to your needs with a much smaller values file. To do this, the package creators try to expose the most commonly tuned parameters in the values file schema - if they exposed every possible value, the values file could be thousands of lines long.</p>
+<p>So it turns out in this case, the Tanzu Package for Contour does not provide a simple way to inject an additional port config into the envoy spec, so we will need to do a special patch to ensure kapp-controller is aware of our custom properties in the desired configuration for envoy.</p>
+<p>The first step is to create a secret with some ytt commands that includes the additional configuration settings we would like to patch in our envoy config:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #8B949E"># Create a manifest for the config secret</span></span>
+<span class="line"><span style="color: #C9D1D9">cat </span><span style="color: #FF7B72">&#x3C;&#x3C;EOF</span><span style="color: #A5D6FF"> > envoy-gitlab-ssh-config.yaml</span></span>
+<span class="line"><span style="color: #A5D6FF">apiVersion: v1</span></span>
+<span class="line"><span style="color: #A5D6FF">kind: Secret</span></span>
+<span class="line"><span style="color: #A5D6FF">metadata:</span></span>
+<span class="line"><span style="color: #A5D6FF">  name: envoy-gitlab-ssh-config-secret</span></span>
+<span class="line"><span style="color: #A5D6FF">  namespace: tap-install</span></span>
+<span class="line"><span style="color: #A5D6FF">stringData:</span></span>
+<span class="line"><span style="color: #A5D6FF">  patch.yaml: |</span></span>
+<span class="line"><span style="color: #A5D6FF">    #@ load("@ytt:overlay", "overlay")</span></span>
+<span class="line"><span style="color: #A5D6FF">    #@overlay/match by=overlay.subset({"kind":"Service","metadata":{"namespace":"tanzu-system-ingress", "name":"envoy"}})</span></span>
+<span class="line"><span style="color: #A5D6FF">    ---</span></span>
+<span class="line"><span style="color: #A5D6FF">    spec:</span></span>
+<span class="line"><span style="color: #A5D6FF">      #@overlay/match missing_ok=True</span></span>
+<span class="line"><span style="color: #A5D6FF">      ports:</span></span>
+<span class="line"><span style="color: #A5D6FF">        - name: gitlab-shell</span></span>
+<span class="line"><span style="color: #A5D6FF">          port: 22</span></span>
+<span class="line"><span style="color: #A5D6FF">          protocol: TCP</span></span>
+<span class="line"><span style="color: #A5D6FF">          targePort: gitlab-shell</span></span>
+<span class="line"><span style="color: #FF7B72">EOF</span></span>
+<span class="line"><span style="color: #8B949E"># deploy the secret in your kubernetes cluster:</span></span>
+<span class="line"><span style="color: #C9D1D9">kubectl create -f envoy-gitlab-ssh-config.yaml</span></span></code></pre>
+<p>Next you will need to add a section to your tap values file so that it includes this secret when it deploys the configured Tanzu packages. I will only include the section you need to add to the file here, but you can view the <a href="https://github.com/afewell/ovathetap/blob/main/assets/tap-values-2.yaml.template">full tap-values file on the ovathetap repo</a> if you would like to see the entire file. Here is the config you would need to add:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">package_overlays:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - name: </span><span style="color: #A5D6FF">"contour"</span></span>
+<span class="line"><span style="color: #C9D1D9">    secrets:</span></span>
+<span class="line"><span style="color: #C9D1D9">    - name: </span><span style="color: #A5D6FF">"envoy-gitlab-ssh-config-secret"</span></span></code></pre>
+<p>Once you have the secret created and your tap values file updated, you will need to update youre tap install:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">tanzu package installed update tap -p tap.tanzu.vmware.com -v $TAP_VERSION  --values-file tap-values.yaml -n tap-install</span></span></code></pre>
+<p>After your tap installation has updated, you can verify that the envoy configuration was correctly updated with the command <code>kubectl get service envoy -n tanzu-system-ingress -oyaml</code> and you should see the updated ssh config:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">spec:</span></span>
+<span class="line"><span style="color: #C9D1D9">  allocateLoadBalancerNodePorts: </span><span style="color: #79C0FF">true</span></span>
+<span class="line"><span style="color: #C9D1D9">  clusterIP: 10.101.48.192</span></span>
+<span class="line"><span style="color: #C9D1D9">  clusterIPs:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - 10.101.48.192</span></span>
+<span class="line"><span style="color: #C9D1D9">  externalTrafficPolicy: Cluster</span></span>
+<span class="line"><span style="color: #C9D1D9">  internalTrafficPolicy: Cluster</span></span>
+<span class="line"><span style="color: #C9D1D9">  ipFamilies:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - IPv4</span></span>
+<span class="line"><span style="color: #C9D1D9">  ipFamilyPolicy: SingleStack</span></span>
+<span class="line"><span style="color: #C9D1D9">  ports:</span></span>
+<span class="line"><span style="color: #C9D1D9">  - name: http</span></span>
+<span class="line"><span style="color: #C9D1D9">    nodePort: 30788</span></span>
+<span class="line"><span style="color: #C9D1D9">    port: 80</span></span>
+<span class="line"><span style="color: #C9D1D9">    protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">    targetPort: 8080</span></span>
+<span class="line"><span style="color: #C9D1D9">  - name: https</span></span>
+<span class="line"><span style="color: #C9D1D9">    nodePort: 30148</span></span>
+<span class="line"><span style="color: #C9D1D9">    port: 443</span></span>
+<span class="line"><span style="color: #C9D1D9">    protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">    targetPort: 8443</span></span>
+<span class="line"><span style="color: #C9D1D9">  - name: gitlab-shell</span></span>
+<span class="line"><span style="color: #C9D1D9">    nodePort: 30424</span></span>
+<span class="line"><span style="color: #C9D1D9">    port: 22</span></span>
+<span class="line"><span style="color: #C9D1D9">    protocol: TCP</span></span>
+<span class="line"><span style="color: #C9D1D9">    targetPort: 22</span></span>
+<span class="line"><span style="color: #C9D1D9">  selector:</span></span>
+<span class="line"><span style="color: #C9D1D9">    app: envoy</span></span>
+<span class="line"><span style="color: #C9D1D9">    kapp.k14s.io/app: </span><span style="color: #A5D6FF">"1674530114656710890"</span></span>
+<span class="line"><span style="color: #C9D1D9">  sessionAffinity: None</span></span>
+<span class="line"><span style="color: #C9D1D9">  type: LoadBalancer</span></span></code></pre>
+<h3 id="setting-up-gitlab">Setting up Gitlab</h3>
+<p>To configure integration between TAP and Gitlab, you will at minimum need a user access token with sufficient privileges and to create an gitlab oauth app for IAM integration.</p>
+<p>By default the gitlab helm chart installation creates a secret with the initial root password. The password value in this secret is base64 encoded as well. The following command grabs the password file from the secret and decodes it:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">kubectl get secrets -n gitlab gitlab-gitlab-initial-root-password -o jsonpath={.data.password} </span><span style="color: #FF7B72">|</span><span style="color: #C9D1D9"> base64 -d</span></span></code></pre>
+<p>Once you have the password value, you can open a browser to the url for your gitlab instance and login to the root account with this password. Once you login, you can navigate to the <code>Access Tokens</code> section on the <code>Settings</code> page and create a new token. Since this is just a basic lab environment, I was not concerned with what the minimum token scope could be, I just created a token with full access. After you create the token, gitlab will allow you to copy it, make sure you document it well because you will not be able to view the token value again.</p>
+<p>You can easily use the web GUI to create a new oauth application, but I decided to create the oauth app using the gitlab API with the following commands:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">create_oauth_app_response=</span><span style="color: #A5D6FF">$(curl -k --request POST --header "PRIVATE-TOKEN: </span><span style="color: #C9D1D9">${gitlab_root_token}</span><span style="color: #A5D6FF">" \</span></span>
+<span class="line"><span style="color: #A5D6FF">     --data "name=tap&#x26;redirect_uri=https://tap-gui.tanzu.demo/api/auth/gitlab/handler/frame&#x26;scopes=api read_api read_user read_repository write_repository read_registry write_registry sudo openid profile email" \</span></span>
+<span class="line"><span style="color: #A5D6FF">     "https://gitlab.tanzu.demo/api/v4/applications")</span></span>
+<span class="line"><span style="color: #79C0FF">echo</span><span style="color: #C9D1D9"> ${create_oauth_app_response} </span><span style="color: #FF7B72">|</span><span style="color: #C9D1D9"> yq -p json -o yaml </span><span style="color: #FF7B72">|</span><span style="color: #C9D1D9"> tee gitlab_oauth_app_config.yaml</span></span></code></pre>
+<p>Much like with the access token, because this is a lab environment I created an oauth app that included very broad scopes, but for a production environment you would want to be sure to figure out what the minimum needed scopes are when creating the oauth app.</p>
+<p>You can also see in the above commands that I captured the json response from the api call, piped it to yq to format it for easier readability, and then saved the output to a file - you will want to make sure you document the output as it will have important values that you will need to configure the TAP integration.</p>
+<p>Before we update TAP, we will also create a repository to host the tap catalog and upload the catalog files.</p>
+<h4 id="prepare-a-repository-for-the-tap-catalog">Prepare a repository for the TAP catalog</h4>
+<p>Now that the initial gitlab setup is done, you can create a repo to host the tap catalog files. In this case I am uploading the yelb catalog which includes some sample/example catalog files - this catalog is available when you download TAP.</p>
+<ul>
+<li>From a web browser, login to gitlab as root (or with an admin account)</li>
+<li>Click <code>Create a group</code> and then <code>Create group</code> to create a group with the following settings (leave any unspecified setting at its default value):
+<ul>
+<li>Group name: tanzu</li>
+<li>Visibility level: Public</li>
+<li>Role: Devops Engineer</li>
+<li>Who will be using this group?: My company or team</li>
+<li>Click <code>Create group</code></li>
+</ul>
+</li>
+<li>Click <code>Create new project</code> and then <code>Create a blank project</code> - use the following settings (leave any unspecified setting at its default value):
+<ul>
+<li>Project name: tap-catalog</li>
+<li>Visibility Level: Public</li>
+<li>Initialize repository with a README: true</li>
+<li>Click <code>Create project</code></li>
+</ul>
+</li>
+<li>upload catalog files to repository:</li>
+</ul>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #8B949E"># Setup your local git client</span></span>
+<span class="line"><span style="color: #C9D1D9">git config --global user.name </span><span style="color: #A5D6FF">"viadmin"</span></span>
+<span class="line"><span style="color: #C9D1D9">git config --global user.email </span><span style="color: #A5D6FF">"viadmin@gitlab.tanzu.demo"</span></span>
+<span class="line"><span style="color: #79C0FF">cd</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">~</span></span>
+<span class="line"><span style="color: #C9D1D9">git clone https://gitlab.tanzu.demo/tanzu/tap-catalog.git</span></span>
+<span class="line"><span style="color: #8B949E"># unpack tap catalog files to tap-catalog directory</span></span>
+<span class="line"><span style="color: #C9D1D9">tar -xvzf </span><span style="color: #A5D6FF">"/home/</span><span style="color: #C9D1D9">${hostusername}</span><span style="color: #A5D6FF">/Downloads/tap-gui-yelb-catalog.tgz"</span><span style="color: #C9D1D9"> -C </span><span style="color: #A5D6FF">"/home/</span><span style="color: #C9D1D9">${hostusername}</span><span style="color: #A5D6FF">/"</span></span>
+<span class="line"><span style="color: #C9D1D9">cp -r </span><span style="color: #A5D6FF">"/home/</span><span style="color: #C9D1D9">${hostusername}</span><span style="color: #A5D6FF">/yelb-catalog/"</span><span style="color: #FF7B72">*</span><span style="color: #C9D1D9"> </span><span style="color: #A5D6FF">"/home/</span><span style="color: #C9D1D9">${hostusername}</span><span style="color: #A5D6FF">/tap-catalog/"</span></span>
+<span class="line"><span style="color: #79C0FF">cd</span><span style="color: #C9D1D9"> </span><span style="color: #A5D6FF">"/home/</span><span style="color: #C9D1D9">${hostusername}</span><span style="color: #A5D6FF">/tap-catalog/"</span></span>
+<span class="line"><span style="color: #C9D1D9">git add </span><span style="color: #79C0FF">.</span></span>
+<span class="line"><span style="color: #C9D1D9">git commit -m </span><span style="color: #A5D6FF">"adding yelb catalog files"</span></span>
+<span class="line"><span style="color: #C9D1D9">git push</span></span></code></pre>
+<p>Once you have pushed the catalog to the repository, use your browser to visit the repository on the gitlab site, click on the catalog-info.yaml file and copy the URL displayed. In this case we created a repository that can be accessed from inside this lab at <a href="https://gitlab.tanzu.demo/tanzu/tap-catalog">https://gitlab.tanzu.demo/tanzu/tap-catalog</a>, and while this url works its actually a vanity URL that gitlab creates and you want to use the real URL value which you copied, which should look like: <a href="https://gitlab.tanzu.demo/tanzu/tap-catalog/-/blob/main/catalog-info.yaml">https://gitlab.tanzu.demo/tanzu/tap-catalog/-/blob/main/catalog-info.yaml</a></p>
+<h4 id="configure-the-tap-values-file-for-gitlab-integration">Configure the tap values file for gitlab integration</h4>
+<p>Now that you have the values needed and the url for the , you can update your tap values file to configure the TAP Gitlab integration.</p>
+<p>Here is the part of the tap-values file you will need to include to configure the integration, you can see where the token, oauth app client ID and secret, and catalog URL’s are included respectively. I included my actual values here as these are from a temporary test environment that has already been deleted:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">tap_gui:</span></span>
+<span class="line"><span style="color: #C9D1D9">  app_config:</span></span>
+<span class="line"><span style="color: #C9D1D9">    app:</span></span>
+<span class="line"><span style="color: #C9D1D9">      baseUrl: https://tap-gui.tanzu.demo</span></span>
+<span class="line"><span style="color: #C9D1D9">    integrations:</span></span>
+<span class="line"><span style="color: #C9D1D9">      gitlab:</span></span>
+<span class="line"><span style="color: #C9D1D9">      - host: gitlab.tanzu.demo</span></span>
+<span class="line"><span style="color: #C9D1D9">        apiBaseUrl: https://gitlab.tanzu.demo/api/v4</span></span>
+<span class="line"><span style="color: #C9D1D9">        token: glpat-sYqgVoJfcVxyvhxz547R </span></span>
+<span class="line"><span style="color: #C9D1D9">    auth:</span></span>
+<span class="line"><span style="color: #C9D1D9">      providers:</span></span>
+<span class="line"><span style="color: #C9D1D9">        gitlab:</span></span>
+<span class="line"><span style="color: #C9D1D9">          development:</span></span>
+<span class="line"><span style="color: #C9D1D9">            clientId: 75a8e8348ba341cd4e6747962a6d691755eae0f15bc846d3830d44896e847c59</span></span>
+<span class="line"><span style="color: #C9D1D9">            clientSecret: 9e01836a565e5886c097cb28adaa75abd13c67b9567369ef2fe8349d45195ca1</span></span>
+<span class="line"><span style="color: #C9D1D9">            </span><span style="color: #8B949E">## uncomment if using self-hosted GitLab</span></span>
+<span class="line"><span style="color: #C9D1D9">            audience: https://gitlab.tanzu.demo</span></span>
+<span class="line"><span style="color: #C9D1D9">            </span><span style="color: #8B949E">## uncomment if using a custom redirect URI</span></span>
+<span class="line"><span style="color: #C9D1D9">            callbackUrl: https://tap-gui.tanzu.demo/api/auth/gitlab/handler/frame</span></span>
+<span class="line"><span style="color: #C9D1D9">    catalog:</span></span>
+<span class="line"><span style="color: #C9D1D9">      locations:</span></span>
+<span class="line"><span style="color: #C9D1D9">        - type: url</span></span>
+<span class="line"><span style="color: #C9D1D9">          target: https://gitlab.tanzu.demo/tanzu/tap-catalog/-/blob/main/catalog-info.yaml              </span></span></code></pre>
+<p>Once the tap values file has been updated, you can update the tap installation to apply the configuration:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">tanzu package installed update tap -p tap.tanzu.vmware.com -v $TAP_VERSION  --values-file tap-values.yaml -n tap-install</span></span></code></pre>
+<p>After the TAP installation is updated, all the integrations should be working and ready to validate.</p>
+<h2 id="using-the-integrations">Using the integrations</h2>
+<p>In this installation we setup integrations that will enable several key use cases:</p>
+<ol>
+<li>Authentication: Your TAP installation will now require login, and will use GitLab as the authentication provider.</li>
+<li>Catalog hosting: Your TAP catalog should now display the yelb catalog files.</li>
+<li>Automated Repo Creation: When deploying App Accelerators, TAP can automatically create gitlab repositories for the code to automate gitops provisioning.</li>
+</ol>
+<p>Thats it! Thanks for reading!</p>
+</article>
+
+
+    </div><br class="my-4 astro-ZGKQLBXH"><footer class="footer astro-AIJBNNF4">
+    <nav class="nav astro-AIJBNNF4">
+        <div class="astro-AIJBNNF4">2021  &copy; Copyright notice |  <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-AIJBNNF4">Art Fewell&#39;s Blog</a>
+        <astro-island uid="Z1BHDED" component-url="/ModeLabel.3b836d0a.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;ModeLabel&quot;,&quot;value&quot;:true}" await-children=""><span slot="dark">(dark)</span></astro-island> theme on <a href="https://astro.build/" class="astro-AIJBNNF4">Astro</a></div>
+        <astro-island uid="1BbWTQ" component-url="/NetlifyIdentity.31726458.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;NetlifyIdentity&quot;,&quot;value&quot;:true}"></astro-island>
+    </nav>
+</footer>
+<div class="portal-root">
+    <astro-island uid="Z2cQ0ST" component-url="/SearchModal.6fa86f6b.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-ZGKQLBXH&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;SearchModal&quot;,&quot;value&quot;:true}"></astro-island>
+</div>
+        </main>
+    </div>
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-OSURTGVX">
+    <head>
+        <!-- Use Google Fonts, if you don't wanna prefer a self-hosted version --><!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet"> --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Art Fewell&#39;s Blog | Gitops-based Kubernetes Cluster lifecycle management with Tanzu, Aria Automation, Terraform and Azure</title>
+    <meta name="title" content="Art Fewell's Blog | Gitops-based Kubernetes Cluster lifecycle management with Tanzu, Aria Automation, Terraform and Azure">
+    <meta name="description" content="This post walks through setting up infrastructure as code deployments of Tanzu Mission Control managed Kubernetes clusters using Aria Automation and Terraform. It provides a step-by-step guide on connecting a Git repo to Aria, enabling the Terraform service, creating Terraform files to deploy an Azure Kubernetes Service cluster with Tanzu Mission Control, importing the Terraform into an Aria blueprint, and deploying the cluster. The author shares their hands-on experience and lessons learned from using Aria Automation to implement a GitOps-based workflow for provisioning lifecycle managed clusters. Key highlights include Aria's support for Terraform, secrets management, and its robust platform capabilities that enable creating custom automations.">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Open Graph Tags (Facebook) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Art Fewell's Blog | Gitops-based Kubernetes Cluster lifecycle management with Tanzu, Aria Automation, Terraform and Azure">
+    
+    <meta property="og:description" content="This post walks through setting up infrastructure as code deployments of Tanzu Mission Control managed Kubernetes clusters using Aria Automation and Terraform. It provides a step-by-step guide on connecting a Git repo to Aria, enabling the Terraform service, creating Terraform files to deploy an Azure Kubernetes Service cluster with Tanzu Mission Control, importing the Terraform into an Aria blueprint, and deploying the cluster. The author shares their hands-on experience and lessons learned from using Aria Automation to implement a GitOps-based workflow for provisioning lifecycle managed clusters. Key highlights include Aria's support for Terraform, secrets management, and its robust platform capabilities that enable creating custom automations.">
+    
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Art Fewell's Blog | Gitops-based Kubernetes Cluster lifecycle management with Tanzu, Aria Automation, Terraform and Azure">
+    
+    <meta property="twitter:description" content="This post walks through setting up infrastructure as code deployments of Tanzu Mission Control managed Kubernetes clusters using Aria Automation and Terraform. It provides a step-by-step guide on connecting a Git repo to Aria, enabling the Terraform service, creating Terraform files to deploy an Azure Kubernetes Service cluster with Tanzu Mission Control, importing the Terraform into an Aria blueprint, and deploying the cluster. The author shares their hands-on experience and lessons learned from using Aria Automation to implement a GitOps-based workflow for provisioning lifecycle managed clusters. Key highlights include Aria's support for Terraform, secrets management, and its robust platform capabilities that enable creating custom automations.">
+    
+
+    
+
+    <link rel="stylesheet" href="/assets/about.de9a8fb5.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.81cd968e.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.f11b79f2.css" /><script type="module" src="/hoisted.9c0718d3.js"></script></head>
+    <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div class="transition-colors">
+        <main class="mx-auto max-w-4xl px-4 md:px-0">
+            <style>astro-island,astro-slot{display:contents}</style><script>(self.Astro=self.Astro||{}).visible=(s,c,n)=>{const r=async()=>{await(await s())()};let i=new IntersectionObserver(e=>{for(const t of e)if(!!t.isIntersecting){i.disconnect(),r();break}});for(let e=0;e<n.children.length;e++){const t=n.children[e];i.observe(t)}},window.dispatchEvent(new Event("astro:visible"));var l;{const c={0:t=>t,1:t=>JSON.parse(t,o),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(JSON.parse(t,o)),5:t=>new Set(JSON.parse(t,o)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(JSON.parse(t)),9:t=>new Uint16Array(JSON.parse(t)),10:t=>new Uint32Array(JSON.parse(t))},o=(t,s)=>{if(t===""||!Array.isArray(s))return s;const[e,n]=s;return e in c?c[e](n):void 0};customElements.get("astro-island")||customElements.define("astro-island",(l=class extends HTMLElement{constructor(){super(...arguments);this.hydrate=()=>{if(!this.hydrator||this.parentElement&&this.parentElement.closest("astro-island[ssr]"))return;const s=this.querySelectorAll("astro-slot"),e={},n=this.querySelectorAll("template[data-astro-template]");for(const r of n){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(const r of s){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("name")||"default"]=r.innerHTML)}const a=this.hasAttribute("props")?JSON.parse(this.getAttribute("props"),o):{};this.hydrator(this)(this.Component,a,e,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),window.removeEventListener("astro:hydrate",this.hydrate),window.dispatchEvent(new CustomEvent("astro:hydrate"))}}connectedCallback(){!this.hasAttribute("await-children")||this.firstChild?this.childrenConnectedCallback():new MutationObserver((s,e)=>{e.disconnect(),this.childrenConnectedCallback()}).observe(this,{childList:!0})}async childrenConnectedCallback(){window.addEventListener("astro:hydrate",this.hydrate);let s=this.getAttribute("before-hydration-url");s&&await import(s),this.start()}start(){const s=JSON.parse(this.getAttribute("opts")),e=this.getAttribute("client");if(Astro[e]===void 0){window.addEventListener(`astro:${e}`,()=>this.start(),{once:!0});return}Astro[e](async()=>{const n=this.getAttribute("renderer-url"),[a,{default:r}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),i=this.getAttribute("component-export")||"default";if(!i.includes("."))this.Component=a[i];else{this.Component=a;for(const d of i.split("."))this.Component=this.Component[d]}return this.hydrator=r,this.hydrate},s,this)}attributeChangedCallback(){this.hydrator&&this.hydrate()}},l.observedAttributes=["props"],l))}</script><script>(self.Astro=self.Astro||{}).load=a=>{(async()=>await(await a())())()},window.dispatchEvent(new Event("astro:load"));</script><br class="my-4 astro-ZGKQLBXH"><header class="header astro-D4C5N2UC">
+    <div class="header__logo astro-D4C5N2UC">
+        <a href="/" class="avatar astro-D4C5N2UC">
+            <img class="header__logo-img astro-D4C5N2UC" src="/assets/mylogo.png" alt="Astro logo">
+        </a>
+    </div>
+    <div class="header__meta flex-1 astro-D4C5N2UC">
+        <h3 class="header__title dark:text-theme-dark-secondary astro-D4C5N2UC">
+            <a href="" class="astro-D4C5N2UC">Art Fewell&#39;s Blog</a>
+        </h3>
+        <div class="header__meta-more flex astro-D4C5N2UC">
+            <p class="header__desc dark:text-sky-200 astro-D4C5N2UC">
+                This site provides words, sentences, and paragraphs - all at no extra charge
+            </p>
+            <nav class="header__nav flex astro-D4C5N2UC">
+                <ul class="header__ref-list astro-D4C5N2UC">
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="27S3Gs" component-url="/SearchBtn.6c92d9d3.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;SearchBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2071 4.89344C19.0923 7.77862 19.3131 12.3193 16.8693 15.4578C16.8846 15.4713 16.8996 15.4854 16.9143 15.5L21.1569 19.7427C21.5474 20.1332 21.5474 20.7664 21.1569 21.1569C20.7664 21.5474 20.1332 21.5474 19.7427 21.1569L15.5 16.9143C15.4854 16.8996 15.4713 16.8846 15.4578 16.8693C12.3193 19.3131 7.77862 19.0923 4.89344 16.2071C1.76924 13.083 1.76924 8.01763 4.89344 4.89344C8.01763 1.76924 13.083 1.76924 16.2071 4.89344ZM14.7929 14.7929C17.1361 12.4498 17.1361 8.6508 14.7929 6.30765C12.4498 3.96451 8.6508 3.96451 6.30765 6.30765C3.96451 8.6508 3.96451 12.4498 6.30765 14.7929C8.6508 17.1361 12.4498 17.1361 14.7929 14.7929Z" fill="currentColor"></path></svg></button></astro-island>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" class="astro-D4C5N2UC"></path>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="/rss.xml" title="RSS" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" class="astro-D4C5N2UC"></path><path d="M4 4a16 16 0 0 1 16 16" class="astro-D4C5N2UC"></path><circle cx="5" cy="19" r="1" class="astro-D4C5N2UC"></circle>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="ZE0Bkh" component-url="/ModeSwitcherBtn.39e589ad.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;ModeSwitcherBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button></astro-island>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<nav class="nav py-3 astro-TATTABV7">
+    <ul class="nav-list dark:text-theme-dark-secondary astro-TATTABV7">
+         <li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/" title="home">Home</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/blog" title="blog">Blog</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/tags" title="tags">Tags</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/about" title="about">About</a>
+            </li>
+    </ul>
+</nav>
+<div class="content astro-ZGKQLBXH">
+        <div class="post__header astro-OSURTGVX">
+            <div class="post__tags astro-OSURTGVX">
+                <a class="post__tag astro-OSURTGVX" href="/tags/VMware" title="VMware">VMware</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu" title="Tanzu">Tanzu</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu Mission Control" title="Tanzu Mission Control">Tanzu Mission Control</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu Application Platform" title="Tanzu Application Platform">Tanzu Application Platform</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu for Kubernetes Operations" title="Tanzu for Kubernetes Operations">Tanzu for Kubernetes Operations</a><a class="post__tag astro-OSURTGVX" href="/tags/Kubernetes" title="Kubernetes">Kubernetes</a><a class="post__tag astro-OSURTGVX" href="/tags/Aria Automation" title="Aria Automation">Aria Automation</a><a class="post__tag astro-OSURTGVX" href="/tags/Aria Assembler" title="Aria Assembler">Aria Assembler</a><a class="post__tag astro-OSURTGVX" href="/tags/Aria Pipelines" title="Aria Pipelines">Aria Pipelines</a><a class="post__tag astro-OSURTGVX" href="/tags/Aria Service Broker" title="Aria Service Broker">Aria Service Broker</a><a class="post__tag astro-OSURTGVX" href="/tags/Terraform" title="Terraform">Terraform</a><a class="post__tag astro-OSURTGVX" href="/tags/Azure" title="Azure">Azure</a><a class="post__tag astro-OSURTGVX" href="/tags/Azure Kubernetes Service" title="Azure Kubernetes Service">Azure Kubernetes Service</a><a class="post__tag astro-OSURTGVX" href="/tags/ABX Actions" title="ABX Actions">ABX Actions</a><a class="post__tag astro-OSURTGVX" href="/tags/Aria Blueprints" title="Aria Blueprints">Aria Blueprints</a><a class="post__tag astro-OSURTGVX" href="/tags/Infrastructure-as-code" title="Infrastructure-as-code">Infrastructure-as-code</a><a class="post__tag astro-OSURTGVX" href="/tags/Gitops" title="Gitops">Gitops</a>
+            </div>
+            <h1 class="post__title astro-OSURTGVX">Gitops-based Kubernetes Cluster lifecycle management with Tanzu, Aria Automation, Terraform and Azure</h1>
+            <h5 class="post__desc astro-OSURTGVX">
+                <a class="post__author astro-OSURTGVX" href="https://twitter.com/ACMTechZone" title="Art Fewell's twitter" target="_blank" rel="external">Art Fewell</a> |
+                <span class="post__date astro-OSURTGVX">Wednesday, October 4, 2023</span>
+            </h5>
+        </div><article class="prose dark:prose-dark astro-TE7CUYU6">
+    <p>I’ve been working on some projects lately using gitops across the Tanzu Portfolio. Most of what I have been working on has been using gitops to customize my cluster and manage applications after I have deployed the cluster. But I have been mostly creating my clusters with clickops. Tanzu Mission Control (TMC) provides really easy ways to provision and lifecyle manage kubernetes clusters on vSphere, AWS and Azure all from the gui. Nearly all large organizations manage a lot of their infrastructure config through their SaaS provider gui and there is nothing wrong with that, but for this project I want to do end-to-end automation and gitops rather than using a graphical interface. I can use gitops and still take advantage of all the rich features from TMC either by using its API’s directly or by using the <a href="https://registry.terraform.io/providers/vmware/tanzu-mission-control/latest">Tanzu Mission Control Terraform Provider</a>.</p>
+<p>While both are great options, the terraform provider already has a lot of the capabilities I desire built in like being declarative, having a pretty straight forward yaml configuration, having a lifecycle management model … but, in order to take advantage of lifecycle and state management capabilities, you need infrastructure in place to provide those services. Fortunately, Aria Automation has built-in support for terraform! I have used Aria Auto for years and am a big fan of the solution overall, some may wonder why Aria to manage terraform and for me personally, I love the flexibility of the Aria solution to support so very many different automation capabilities in a common easy to use platform.</p>
+<p>Beyond its native blueprinting service, Aria automation supports a huge range of configuration management options including terraform, puppet, ansible, its own native blueprinting capabilities for a broad range of out-of-the-box vsphere, aws, azure and gcp services. Further, VMware purchased popular configuration management company Salt and now has the entire saltstack portfolio fully integrated including the powerful new open source configuration language from the salt creators known as “Idem”. And beyond traditional config management solutions, Aria includes a powerful eventing and faas based framework for custom resource management. Aria provides simple low code interfaces that empower Platform Engineers(PE’s) to easily create event-driven faas-based services built on advanced cloud native patterns.</p>
+<p>With this framework PE’s can create custom resources by entering in a few form fields and providing functions for the create, read, update and delete operations for that object, the Aria platform does all the rest of the heavy lifting. It provides a cloud-consumer like interface with the service catalog which also provides the advanced identity and policy capabilities that large organizations require. It organizes deployments by user and projects allowing users and project owners to easily identify the state and execute lifecycle management actions against custom objects. You can also easily provide functions that can be used as day-2 actions on deployed objects … you can add custom actions both to custom resource types and to any other of the many different types of objects you can create and manage including any resources you create with the terraform service for example.</p>
+<p>The faas-based “ABX actions” solution inherently abstracts the functions provided for custom resources and custom actions and can automatically execute the functions on AWS Lambda, as Azure Functions, or on your own kubernetes cluster. You can define metadata to leverage metadata-based routing if you want to automate where or how functions are executed. These custom faas-based services can be triggered manually, or by creating a subscription to an event using the kafka (or rabbitMQ when on-prem) based eventing framework that provides event triggers for all the lifecycle management events for all the various objects supported in the framework along with the ability to create custom events and other platform capabilites to tie in git, registry or gerrit-based webhooks. The service leverages kafka to provide reliable message delivery to event subscribers and makes it easy to trigger custom actions based on lifecycle events to bring infrastructure automation capabilities to the next level.</p>
+<p>If that werent enough, you can also leverage Aria Pipelines to provide robust CICD pipeline capabilities. Pipelines can include elements with custom vm and container builds that can automate pretty much anything that can be automated. And while I love the flexibility of pipelines, it does highlight the immense value in Aria Assembler’s configuration management and custom resource toolsets as those help PE’s tackle the hardest part of infracode … which is full lifecycle management. Its not all that hard to create some deployment scripts and deploy things, but to reliably maintain the state and handle all configuration changes and lifecycle management tasks needed for all deployed objects is profoundly more complex, so having the platform handle those parts is ideal for me as a consumer of the service.</p>
+<p>The most valuable part of Aria Automation overall in my opinion however is not its support for so many popular frameworks and powerful extensibility, its the elegant core platform features that allow you to compose all of these different modular components together so that you can create virtually any type of cloud service and deliver a cloud-provider like consumer experience for your own custom environment.</p>
+<p>The main point of my post today is to share how I setup an Aria blueprint that uses the Tanzu Mission Control terraform provider to create a service that can allow myself or other users to deploy TMC lifecycle-managed kubernetes clusters based on an infrastructure-as-code and gitops methodology. While one does not require a graphical interface to use infracode or gitops, I really prefer to have the benefits of both approaches, and that capability is one of the things I love most about Aria Automation. Aria provides graphical interfaces that lets users who prefer the GUI use the gui but then trigger the same underlying gitops-based automations to deliver a service.</p>
+<h2 id="environment-setup">Environment Setup</h2>
+<p>Here are the high level steps I went through to setup this service:</p>
+<ol>
+<li>Connect your git repo to Aria Automation</li>
+<li>Enable Terraform-based deployments in your project</li>
+<li>Create your terraform files and save them in the connected git repo</li>
+<li>Create an aria assembler blueprint and import your terraform file</li>
+<li>Deploy! (Optionally, you can also expose the ability to deploy through Aria Service Broker)</li>
+</ol>
+<h3 id="1-connect-your-git-repo-to-aria-automation">1. Connect your git repo to Aria Automation</h3>
+<ol>
+<li>Login to VMware Cloud and Navigate to Aria Automation Assembler</li>
+<li>On the <code>Infrastructure</code> tab, select <code>Integrations</code></li>
+<li>Select the <code>+ ADD INTEGRATION</code> button</li>
+<li>Select the type as <code>GitHub</code> (GitLab is also supported)</li>
+<li>In the <code>Name</code> field enter the name for your username or github org name if your repo will be saved under an organization.</li>
+<li>In the <code>Server URL</code> field enter the value <code>https://api.github.com</code> for github, or the appropriate API value for gitlab.</li>
+<li>Enter an API Token for the github/gitlab account with appropriate permission.</li>
+</ol>
+<p>Below please find a screenshot of my github integration configuration for your reference:
+<img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/enable_aria_github_integration.png" alt="Enable Aria GitHub Integration"></p>
+<h3 id="2-enable-terraform-based-deployments-in-your-project">2. Enable Terraform-based deployments in your project</h3>
+<p>Enabling Terraform in your project is very simple:</p>
+<ol>
+<li>Login to VMware Cloud and Navigate to Aria Automation Assembler</li>
+<li>On the <code>Infrastructure</code> tab, select <code>Projects</code></li>
+<li>Select your project and navigate to the <code>Provisioning</code> tab</li>
+<li>Scroll to bottom of the page and in the section titled <code>Cloud Zone Mapping for Template Terraform Resources</code>, Enable the toggle to <code>Allow terraform cloud zone mapping</code> as shown in the image below:</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/enable_terraform_for_aria_project.png" alt="Enable Terraform for Aria Project"></p>
+<ol start="5">
+<li>Select the <code>Integrations</code> tab and click <code>Add Repository</code>. Note you will need to connect Aria to your git provider as shown in section 1 before you will be able to add the repository here.</li>
+</ol>
+<p>On the Add Repository pane, set the following values:</p>
+<ul>
+<li>Type: <code>Terraform configurations</code></li>
+<li>Repository: The <code>username/reponame</code> value for your git repo. For example, the full url for my repository is <a href="https://github.com/afewell/opsdev.git">https://github.com/afewell/opsdev.git</a> where <code>afewell</code> is my username and <code>opsdev</code> is the name of my repository. Accordingly the value I put in the Repository field as shown in the image below is <code>afewell/opsdev</code></li>
+<li>Branch: The name of the git branch you would like to use</li>
+<li>Folder: The subdirectory where your terraform files will be located within your repo. In my case I created a folder at the root of my repository named <code>terraform</code>. All of the terraform files you want Aria to access must be located within this directory. You can place multiple terraform files within this directory, or organize them into sub-folders that you can define in the blueprint. Note that Aria only allows one level of subdirectories nested within the top-level terraform directory to organize your terraform files, you cannot have complex multi-level nesting schemas.</li>
+</ul>
+<p>Here is an example image from my environment:</p>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/add_terraform_repo_to_project.png" alt="Add Terraform Repository to Project"></p>
+<h3 id="3-create-your-terraform-files-and-save-them-in-the-connected-git-repo">3. Create your terraform files and save them in the connected git repo</h3>
+<p>Now for the fun part, lets review the terraform needed to manage an Azure Kubernetes Cluster with the Tanzu Mission Control terraform provider. In this demo, I used the Azure module and deployed an AKS cluster, but the process is almost exactly the same for deploying AWS EKS or vSphere clusters through TMC and in the future I hope to share some follow-ons to this post with examples for vSphere and EKS clusters.</p>
+<p>If you have previous terraform experience, the <a href="https://registry.terraform.io/providers/vmware/tanzu-mission-control/latest">TMC Terraform Provider</a> and the Aria Assembler Terraform service should both feel very natural to you. The TMC provider configuration felt similar to most other terraform providers I have used, and using the Aria Terraform Service is just like doing it from my own desktop, I use the same terraform file with no special formatting. One thing to take into consideration is that the Aria Terraform Service executes the terraform plan and apply commands against a directory you specify with terraform files in it, you do not have the ability to execute other terraform commands and should organize your terraform files accordingly.</p>
+<p>Before I proceed I want to highlight a couple of great guides written by my teammates <a href="https://apps-cloudmgmt.techzone.vmware.com/users/corey-dinkens">Corey Dinkens</a> and <a href="https://apps-cloudmgmt.techzone.vmware.com/users/scott-rogers">Scott Rogers</a> about the TMC Terraform Provider. Their guides combined with the great provider documentation made it really easy for me to setup:</p>
+<ul>
+<li><a href="https://tanzu.vmware.com/content/blog/tanzu-mission-control-automation-and-package-management">Terraform, GitOps, Helm: Automation and package management with VMware Tanzu Mission Control</a></li>
+<li><a href="https://apps-cloudmgmt.techzone.vmware.com/blog/automate-kubernetes-platform-operations-tanzu">Automate Kubernetes Platform Operations with Tanzu</a></li>
+</ul>
+<h4 id="exploring-the-terraform-files">Exploring the terraform files</h4>
+<p>You can find the terraform files I used in my environment here: [<a href="https://github.com/afewell/opsdev/tree/main/terraform/tmc-akscluster">https://github.com/afewell/opsdev/tree/main/terraform/tmc-akscluster</a>]</p>
+<p>If you examine the above link you can see I created a main.tf and a vars.tf file. I prepared these files to expose the more commonly configured attributes of the akscluster module in the TMC Terraform Provider.</p>
+<p>First, lets review the top part of the main.tf file:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">terraform {</span></span>
+<span class="line"><span style="color: #c9d1d9">  required_providers {</span></span>
+<span class="line"><span style="color: #c9d1d9">    tanzu-mission-control = {</span></span>
+<span class="line"><span style="color: #c9d1d9">      source  = "vmware/tanzu-mission-control"</span></span>
+<span class="line"><span style="color: #c9d1d9">      version = "1.2.3"</span></span>
+<span class="line"><span style="color: #c9d1d9">    }</span></span>
+<span class="line"><span style="color: #c9d1d9">  }</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">// Basic details needed to configure Tanzu Mission Control provider</span></span>
+<span class="line"><span style="color: #c9d1d9">provider "tanzu-mission-control" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  endpoint            = var.tmc_endpoint</span></span>
+<span class="line"><span style="color: #c9d1d9">  vmw_cloud_api_token = var.vmw_cloud_api_token</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span></code></pre>
+<p>Here you can see the standard terraform syntax to define which terraform provider you are using and how to authenticate to the provider. Aria Assembler supports any terraform provider published in the terraform registry, or there is a method available to upload a zip file with your custom provider. In this case the TMC provider is located in the official terraform registry so its easy to specify, and I just copied the version number from the provider documentation. Remember this is the version number of the terraform provider plugin, not the version of terraform itself.</p>
+<p>One additional highlight here is that the variable value used here for the provider token is being injected by the Aria Assembler secrets service … I will go into more detail on that when I review the vars.tf file below.</p>
+<p>First, lets review the remainder of the main.tf file which specifies the configuration values for the akscluster module:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">resource "tanzu-mission-control_akscluster" "aks_cluster" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  credential_name = var.azure_credential_name</span></span>
+<span class="line"><span style="color: #c9d1d9">  subscription_id = var.azure_subscription_id</span></span>
+<span class="line"><span style="color: #c9d1d9">  resource_group  = var.azure_resource_group</span></span>
+<span class="line"><span style="color: #c9d1d9">  name            = var.cluster_name</span></span>
+<span class="line"><span style="color: #c9d1d9">  meta {</span></span>
+<span class="line"><span style="color: #c9d1d9">    description = var.cluster_description</span></span>
+<span class="line"><span style="color: #c9d1d9">    labels      = var.cluster_labels</span></span>
+<span class="line"><span style="color: #c9d1d9">  }</span></span>
+<span class="line"><span style="color: #c9d1d9">  spec {</span></span>
+<span class="line"><span style="color: #c9d1d9">    cluster_group   = var.cluster_group_name</span></span>
+<span class="line"><span style="color: #c9d1d9">    config {</span></span>
+<span class="line"><span style="color: #c9d1d9">      location           = var.cluster_location</span></span>
+<span class="line"><span style="color: #c9d1d9">      kubernetes_version = var.kubernetes_version</span></span>
+<span class="line"><span style="color: #c9d1d9">      network_config {</span></span>
+<span class="line"><span style="color: #c9d1d9">        dns_prefix = var.cluster_dns_prefix</span></span>
+<span class="line"><span style="color: #c9d1d9">      }</span></span>
+<span class="line"><span style="color: #c9d1d9">    }</span></span>
+<span class="line"><span style="color: #c9d1d9">    nodepool {</span></span>
+<span class="line"><span style="color: #c9d1d9">      name = var.nodepool_1_name</span></span>
+<span class="line"><span style="color: #c9d1d9">      spec {</span></span>
+<span class="line"><span style="color: #c9d1d9">        count   = var.nodepool_1_count</span></span>
+<span class="line"><span style="color: #c9d1d9">        mode    = "SYSTEM"</span></span>
+<span class="line"><span style="color: #c9d1d9">        vm_size = var.nodepool_1_vm_size</span></span>
+<span class="line"><span style="color: #c9d1d9">        os_disk_size_gb = var.nodepool_1_node_disk_size_gb</span></span>
+<span class="line"><span style="color: #c9d1d9">        auto_scaling_config {</span></span>
+<span class="line"><span style="color: #c9d1d9">          enable    = var.nodepool_1_enable_auto_scaling</span></span>
+<span class="line"><span style="color: #c9d1d9">          max_count = var.nodepool_1_max_node_count</span></span>
+<span class="line"><span style="color: #c9d1d9">          min_count = var.nodepool_1_min_node_count</span></span>
+<span class="line"><span style="color: #c9d1d9">        }</span></span>
+<span class="line"><span style="color: #c9d1d9">      }</span></span>
+<span class="line"><span style="color: #c9d1d9">    }</span></span>
+<span class="line"><span style="color: #c9d1d9">  }</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span></code></pre>
+<p>If you have created an AKS cluster, especially if you have done so through TMC before all these values should look pretty familiar to you as these are the same options you can select through the GUI just in terraform format.</p>
+<p>One important point to note here is that before this will work, you have to configure Tanzu Mission Control with a credential for Azure, I almost forgot to mention that because I already had it setup long before this exercise. You must have the azure credential configured within TMC, and you can view the credential in TMC to identify the azure credential name and subscription ID. The same would be true for vSphere or AWS.</p>
+<p>Most of the additional fields shown for the akscluster module are pretty straightforward so I want go into more detail but please reach out if you have any questions.</p>
+<p>Now we have reviewed the main.tf file, lets examine the vars.tf file and how the Aria Terraform Service handles terraform variables.</p>
+<p>Aria wraps the terraform code within an Aria Blueprint which provides a lot of additional functionality outside of terraform. For example, Aria provides a really nice form service allowing the service creator to make a simple form or wizard to make it easy for users to create a deployment using the terraform template. The GUI for the forms provides both a code and a form view for the user to enter the data in the way they are most comfortable. The service also provides a visual forms designer so you can customize forms just how you like. Aria also provides an elegant REST API that allows you to instantiate the service and provide values per your defined schema with API calls. Aria also provides input and output bindings allowing the blueprint to be called by other services, resources, actions or pipelines enabling you to combine the various capabilities of the Aria portfolio into combined workflows and recipes!</p>
+<p>The blueprint itself is another item that must be managed in addition to the terraform files. It is a thin layer of markup and a small configuration to manage for the powerful benefits it provides but is something you have to consider when you are setting up the solution.</p>
+<p>The blueprint plays a central role in how you manage your terraform variable bindings as any time you or some automation calls this blueprint this will bind the blueprint inputs to the variables you define in terraform. Or in other words, you will need to define your variables in terraform, and also define them in the aria blueprint. When a user instantiates the blueprint from a service catalog or rest call for example, they are communicating with the blueprint service, which will then pass and bind values to the terraform variables.</p>
+<p>Defining variables in Aria is simple and very similar to terraform, and to make it even easier, you can define your vars in terraform and use the import function in Aria Assembler and it will automatically create the variable definitions for the blueprint. Keep in mind the import operation is a one-time operation, and after the initial import service owners will need to ensure they keep the variables in sync between the aria blueprint and the terraform file.</p>
+<p>Here is my vars.tf file:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">variable "terraform_tmc_version" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Terraform TMC Provider Version"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default = "1.2.3"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "tmc_endpoint" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "TMC endpoint URL"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default = "tanzutmm.tmc.cloud.vmware.com"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "vmw_cloud_api_token" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "VMware Cloud API Token"</span></span>
+<span class="line"><span style="color: #c9d1d9">  sensitive   = true</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "azure_credential_name" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "TMC Credential Name for Azure Account"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "afewell-azure"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "azure_subscription_id" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Azure Subscription ID"</span></span>
+<span class="line"><span style="color: #c9d1d9">  sensitive   = true</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "azure_resource_group" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Azure Resource Group"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "genaissance"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "cluster_name" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Enter a name for the cluster that will be created"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "my-new-aks-cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "cluster_group_name" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Enter the name for the cluster group the created cluster will be associated to."</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "genaissance"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "cluster_description" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Enter a description for this cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "Enter a description for this cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "cluster_labels" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = map(string)</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Enter any labels for this cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = {</span></span>
+<span class="line"><span style="color: #c9d1d9">    key1 = "value1"</span></span>
+<span class="line"><span style="color: #c9d1d9">    key2 = "value2"</span></span>
+<span class="line"><span style="color: #c9d1d9">  }  </span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "cluster_location" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "The Azure Region where the cluster will be deployed"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "westus2"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "cluster_dns_prefix" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "DNS Prefix for cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "westus2"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "kubernetes_version" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Kubernetes Version for this cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "1.26.6"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "nodepool_1_name" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "TMC Credential Name for Azure Account"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "systemnp"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "nodepool_1_count" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = number</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Number of nodes, ignored if autoscaling"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = 3</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "nodepool_1_vm_size" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = string</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "VM size for nodepool 1 nodes"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = "Standard_A2m_v2"</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "nodepool_1_node_disk_size_gb" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = number</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "OS Disk Size in GB to be used to specify the disk size for every machine in the nodepool. If you specify 0, it will apply the default osDisk size according to the vmSize specified"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = 150</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "nodepool_1_enable_auto_scaling" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = bool</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Enable auto-scaling for this cluster (true or false)?"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = true</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "nodepool_1_max_node_count" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = number</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Maximum number of nodes for this cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = 5</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">variable "nodepool_1_min_node_count" {</span></span>
+<span class="line"><span style="color: #c9d1d9">  type        = number</span></span>
+<span class="line"><span style="color: #c9d1d9">  description = "Minimum number of nodes for this cluster"</span></span>
+<span class="line"><span style="color: #c9d1d9">  default     = 1</span></span>
+<span class="line"><span style="color: #c9d1d9">}</span></span></code></pre>
+<p>As you can see these are standard terraform variable declarations. One thing Ive learned after my initial use of these is that going forward I dont think its a good idea to define the default values within terraform unless you have some specific need to. The reason why is you will also need to create default values in the Aria blueprint which would override any default values specified in terraform directly and be a potential source of confusion, in addition to needing to manually keep the default values in sync after the initial import, I think it would be easier to keep the default values exclusively in the Aria blueprint and I will probably change my setup to reflect that at some point.</p>
+<p>Next lets look at how to import the terraform files into an Aria blueprint.</p>
+<h3 id="create-an-aria-assembler-blueprint-and-import-your-terraform-file">Create an Aria Assembler blueprint and import your terraform file</h3>
+<p>Now lets look at how to import the terraform files:</p>
+<ol>
+<li>Log into Aria Automation Assembler</li>
+<li>On the design tab select the option for <code>New From Terraform</code></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/new_blueprint_from_terraform.png" alt="new_blueprint_from_terraform"></p>
+<ol start="3">
+<li>Enter the desired name and description for the terraform object and select the same project you enabled for terraform in step 1, as shown in the following image and then click next.</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/new_blueprint_from_terraform_wizard_p1.png" alt="new_blueprint_from_terraform_wizard_p1"></p>
+<ol start="4">
+<li>Select the repository where your terraform files are located, the commit ID for the git commit with the correct version of your terraform files, and the source directory where your terraform files are located.</li>
+</ol>
+<p>Note that the fields on this screen have dynamic selectors that only display relevant values. The value for the repository will automatically appear in the pulldown based on the integration and project add repository steps we covered in sections 1 and 2 of this document. The commit ID will automatically populate the most recent commit ID relevant for the terraform files found. The Source Directory field will dynamically display subdirectories nested directly (only 1 level deep) within the terraform directory defined in the Project/Repository settings as shown in section 2 of this document.</p>
+<p>Here is a screenshot of my setup for your reference:</p>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/new_blueprint_from_terraform_wizard_p2.png" alt="new_blueprint_from_terraform_wizard_p2"></p>
+<p>The final 3rd page of the wizard to import our terraform files is shown in the screenshot below:</p>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/new_blueprint_from_terraform_wizard_p3.png" alt="new_blueprint_from_terraform_wizard_p3"></p>
+<p>Observe that the above screenshot shows a preview of the import operation where we can see details of the terraform file we previously saved on github now visible in Aria, you can specify the terraform version to use and verify key details from your terraform file such as provider details and most importantly that the variables imported from your vars.tf file look correct.</p>
+<p>One key detail to note is the “Sensitive” column, which in this case is referring to how the Aria blueprint input will treat the variable, checking this box does not change anything in your vars.tf file. I did have a couple vars in my vars.tf file marked as sensitive in my terraform variable declarations, and it did not automatically select the sensitive checkbox when importing. I am not sure if its supposed to as I am not an expert on Aria but in any case its important to understand what happens when you check the sensitive column to ensure it aligns with your secrets management strategy.</p>
+<p>If the Sensitive column is checked/true for a given variable, then when the input variable is declared in the blueprint, it will have the attribute <code>encrypted</code>. I think the main purpose of the encrypted attribute is to ensure the user input form properly handles the input form in cases where a user would manually type in the secret into the form.</p>
+<p>In my configuration I am not defining any blueprint-level inputs for my secrets because I am injecting the secrets directly from the Aria secrets service as I will explain further when we get to the input bindings section of the blueprint.</p>
+<p>Regardless of how secrets are injected by Aria, they will still need to be accessible to terraform which means you should still declare your secret variables in terraform and be sure to mark them as Sensitive within terraform.</p>
+<p>After you complete the import, a new blueprint will be created. Here is the first part of the blueprint that was automatically created when I imported my terraform file:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">inputs:</span></span>
+<span class="line"><span style="color: #c9d1d9">  terraform_tmc_version:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: 1.2.3</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Terraform TMC Provider Version</span></span>
+<span class="line"><span style="color: #c9d1d9">  tmc_endpoint:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: tanzutmm.tmc.cloud.vmware.com</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: TMC endpoint URL</span></span>
+<span class="line"><span style="color: #c9d1d9">  azure_credential_name:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: afewell-azure</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: TMC Credential Name for Azure Account</span></span>
+<span class="line"><span style="color: #c9d1d9">  azure_resource_group:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: genaissance</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Azure Resource Group</span></span>
+<span class="line"><span style="color: #c9d1d9">  cluster_name:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: my-new-aks-cluster</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Enter a name for the cluster that will be created</span></span>
+<span class="line"><span style="color: #c9d1d9">  cluster_group_name:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: genaissance</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Enter the name for the cluster group the created cluster will be associated to.</span></span>
+<span class="line"><span style="color: #c9d1d9">  cluster_description:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: Enter a description for this cluster</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Enter a description for this cluster</span></span>
+<span class="line"><span style="color: #c9d1d9">  cluster_labels:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: object</span></span>
+<span class="line"><span style="color: #c9d1d9">    default:</span></span>
+<span class="line"><span style="color: #c9d1d9">      key1: value1</span></span>
+<span class="line"><span style="color: #c9d1d9">      key2: value2</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Enter any labels for this cluster</span></span>
+<span class="line"><span style="color: #c9d1d9">  cluster_location:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: westus2</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: The Azure Region where the cluster will be deployed</span></span>
+<span class="line"><span style="color: #c9d1d9">  kubernetes_version:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: 1.26.6</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Kubernetes Version for this cluster</span></span>
+<span class="line"><span style="color: #c9d1d9">  nodepool_1_name:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: systemnp</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: TMC Credential Name for Azure Account</span></span>
+<span class="line"><span style="color: #c9d1d9">  nodepool_1_count:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: number</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: '3'</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Number of nodes, ignored if autoscaling</span></span>
+<span class="line"><span style="color: #c9d1d9">  nodepool_1_vm_size:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: string</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: Standard_A2m_v2</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: VM size for nodepool 1 nodes</span></span>
+<span class="line"><span style="color: #c9d1d9">  nodepool_1_node_disk_size_gb:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: number</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: '150'</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: OS Disk Size in GB to be used to specify the disk size for every machine in the nodepool. If you specify 0, it will apply the default osDisk size according to the vmSize specified</span></span>
+<span class="line"><span style="color: #c9d1d9">  nodepool_1_enable_auto_scaling:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: boolean</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: true</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Enable auto-scaling for this cluster (true or false)?</span></span>
+<span class="line"><span style="color: #c9d1d9">  nodepool_1_max_node_count:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: number</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: '5'</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Maximum number of nodes for this cluster</span></span>
+<span class="line"><span style="color: #c9d1d9">  nodepool_1_min_node_count:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: number</span></span>
+<span class="line"><span style="color: #c9d1d9">    default: '1'</span></span>
+<span class="line"><span style="color: #c9d1d9">    description: Minimum number of nodes for this cluster</span></span></code></pre>
+<p>As you can see the format to create inputs in an Aria blueprint is similar to Terraform and pretty simple, and there are a ton of additional options beyond what I will explore here to provide advanced form controls to improve the user experience.</p>
+<p>All the variables you see here were automatically imported when I imported the terraform file.</p>
+<p>The above blueprint section defines the input variables but not the bindings. Lets now examine the final section of the blueprint code which defines the terraform version, the input bindings, the git integration, commit id, and directory of the terraform files that will be used for the blueprint:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">resources:</span></span>
+<span class="line"><span style="color: #c9d1d9">  terraform:</span></span>
+<span class="line"><span style="color: #c9d1d9">    type: Cloud.Terraform.Configuration</span></span>
+<span class="line"><span style="color: #c9d1d9">    properties:</span></span>
+<span class="line"><span style="color: #c9d1d9">      variables:</span></span>
+<span class="line"><span style="color: #c9d1d9">        terraform_tmc_version: ${input.terraform_tmc_version}</span></span>
+<span class="line"><span style="color: #c9d1d9">        tmc_endpoint: ${input.tmc_endpoint}</span></span>
+<span class="line"><span style="color: #c9d1d9">        vmw_cloud_api_token: ${secret.afewell_vmw_cloud_api_token}</span></span>
+<span class="line"><span style="color: #c9d1d9">        azure_credential_name: ${input.azure_credential_name}</span></span>
+<span class="line"><span style="color: #c9d1d9">        azure_subscription_id: ${secret.afewell_azure_subscription_id}</span></span>
+<span class="line"><span style="color: #c9d1d9">        azure_resource_group: ${input.azure_resource_group}</span></span>
+<span class="line"><span style="color: #c9d1d9">        cluster_name: ${input.cluster_name}</span></span>
+<span class="line"><span style="color: #c9d1d9">        cluster_group_name: ${input.cluster_group_name}</span></span>
+<span class="line"><span style="color: #c9d1d9">        cluster_description: ${input.cluster_description}</span></span>
+<span class="line"><span style="color: #c9d1d9">        cluster_labels: ${input.cluster_labels}</span></span>
+<span class="line"><span style="color: #c9d1d9">        cluster_location: ${input.cluster_location}</span></span>
+<span class="line"><span style="color: #c9d1d9">        kubernetes_version: ${input.kubernetes_version}</span></span>
+<span class="line"><span style="color: #c9d1d9">        nodepool_1_name: ${input.nodepool_1_name}</span></span>
+<span class="line"><span style="color: #c9d1d9">        nodepool_1_count: ${input.nodepool_1_count}</span></span>
+<span class="line"><span style="color: #c9d1d9">        nodepool_1_vm_size: ${input.nodepool_1_vm_size}</span></span>
+<span class="line"><span style="color: #c9d1d9">        nodepool_1_node_disk_size_gb: ${input.nodepool_1_node_disk_size_gb}</span></span>
+<span class="line"><span style="color: #c9d1d9">        nodepool_1_enable_auto_scaling: ${input.nodepool_1_enable_auto_scaling}</span></span>
+<span class="line"><span style="color: #c9d1d9">        nodepool_1_max_node_count: ${input.nodepool_1_max_node_count}</span></span>
+<span class="line"><span style="color: #c9d1d9">        nodepool_1_min_node_count: ${input.nodepool_1_min_node_count}</span></span>
+<span class="line"><span style="color: #c9d1d9">      providers: []</span></span>
+<span class="line"><span style="color: #c9d1d9">      terraformVersion: 1.5.5</span></span>
+<span class="line"><span style="color: #c9d1d9">      configurationSource:</span></span>
+<span class="line"><span style="color: #c9d1d9">        repositoryId: a7de56c9-6d79-490d-a643-ea40fdbe787c</span></span>
+<span class="line"><span style="color: #c9d1d9">        commitId: f92f7112e729b887168c500bdfbdebda3d4f3faa</span></span>
+<span class="line"><span style="color: #c9d1d9">        sourceDirectory: tmc-akscluster</span></span></code></pre>
+<p>This section of the blueprint was also automatically created when I imported the terraform file.</p>
+<p>You can see the type is a terraform configuration, the variables defined here bound to the terraform variables defined in your vars.tf file and they are mapped to input values defined in the <code>inputs</code> section of the blueprint.</p>
+<p>One key thing to note is that you will not see the <code>vmw_cloud_api_token</code> or <code>azure_subscription_id</code> fields defined as inputs in the blueprint, and if you examine those fields you will see they are mapped to the values ${secret.afewell_azure_subscription_id} and ${secret.afewell_vmw_cloud_api_token}. The variable binding here shows how we can inject values from Aria Automations secret service to take care of our secrets handling. I can create secrets easily through the Aria Assembler gui or via API call and easily use them within various Aria solutions which is essential in my case as I want to be able to deploy these without needing to setup additional components and this built-in secrets service allows me to easily and securely bootstrap my initial deployments. The terraform vars bound to these secrets are defined in my vars.tf with the sensitive attribute so that after the secret is injected terraform will handle the values as secret in its visible operations and logs.</p>
+<h3 id="5-deploy">5. Deploy!</h3>
+<p>Ok we have now completed all the required setup and can deploy a new AKS cluster leveraging Tanzu Mission Control to handle all the lifecycle management and provide a fleet-level management plane.</p>
+<p>First I want to note that now that the blueprint is created, we can manually create deployments from Aria Assembler, we can trigger deployments automatically from lifecycle events or webhooks, we could include the blueprint execution in pipelines and workflows or expose it to project users with a Aria Service Broker catalog. In this case I am going to deploy it directly from Assembler but I wanted to highlight all the available options.</p>
+<ol>
+<li>Login to VMware Cloud and navigate to Aria Automation Assembler</li>
+<li>On the design tab, click to open your blueprint.</li>
+<li>Click <code>DEPLOY</code></li>
+<li>Observe the option to either create a new deployment or update an existing deployment. Select <code>Create a new deployment</code></li>
+<li>On the first page of the Deploy wizard, create a name for the deployment and if desired specify a blueprint template version and/or description as shown as the image below and click next.</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/deploy_wizard_p1.png" alt="deploy_wizard_p1"></p>
+<ol start="6">
+<li>On the second page of the Deploy wizard, you can see all the input fields that need to be filled in to create the deployment. As you can see I put in sensible default values for my project to simplify the user experience when creating deployments. Once a user has validated all the inputs as shown in the following image, click <code>Deploy</code></li>
+</ol>
+<p>Now all we need to do is wait while we observe our deployment executing.</p>
+<p>When I setup this environment, it was the first time I had used the TMC Terraform Provider. I anticipated that I would need to do some troubleshooting with my terraform files before I had them fully working and it would be more familiar to troubleshoot locally first, but I decided it would be a fun test and learning experience to bootstrap the terraform config development using the Aria Terraform service.</p>
+<p>I use the <a href="https://github.com/marketplace/actions/action-for-semantic-release">Github Action for Semantic Release</a> to maintain gitops based versioning and automated release management to track and document commits to my repo, so if your are interested you can <a href="https://github.com/afewell/opsdev/blob/main/CHANGELOG.md">check out the changelog</a> to see the full details of each of the little kinks I had to work out to get the script nailed down.</p>
+<p>I was concerned that using the service to deploy the terraform may be more difficult to troubleshoot but the opposite turned out to be true, its super easy to create a deployment and you can click on it to see the near realtime console and log output.</p>
+<p><img src="https://raw.githubusercontent.com/afewell/afewell.github.io/main/public/images/assembler_tmc_akscluster_deployment_history.png" alt="assembler_tmc_akscluster_deployment_history"></p>
+<p>I often build similar types of services from scratch, and it was refreshing in this case using the Aria Terraform Service. It was really nice to not need to bootstrap a container host or write a dockerfile to setup the runtime environment or ssh anywhere or type long docker or kubectl commands to troubleshoot, just a couple clicks to find the key information I needed, and at least in this case terraform was providing nice error messages so I was able to iterate through all the issues quickly and within an hour or two had it working exactly as desired … and that time is considering I have never used the Aria terraform service before, I’ve never used the TMC Terraform provider, and I’m also not all that experienced with Terraform.</p>
+<p>I feel like all the ease of use features in Aria just feel like a really premium, luxurious experience not just in setting up the terraform files, but then handling the state file management and maintaining deployment objects that I can easily keep track of and providing all the hooks I need maintain my cluster deployments in TMC using infrastructure-as-code and gitops methods.</p>
+<h2 id="summary-and-next-steps">Summary and Next Steps</h2>
+<p>In this post I reviewed my demo setup including setting up the Aria Assembler terraform service, bootstrapping the terraform file development, integrating github with Aria to use git version control to manage my terraform files, and finally we reviewed how to create Tanzu Mission Control Lifecycle Managed Azure Kubernetes Cluster deployments with the final blueprint and observed a successful deployment.</p>
+<p>While this has been a great experience so far, it is just the tip of the iceberg of what I want to build out and I plan to follow this up with additional posts as I build out all the steps to get to my final goal of a fully automated build of my complete demo environment, which I want to make pretty fancy so hopefully will be a lot of fun.</p>
+<p>Next up is I need to complete the gitopsificiation of this service, so far I am part way there but there are several more elements I need to complete to achieve complete gitops coverage. First, note that the Aria Blueprint statically references a specific commit ID for the version of terraform file to use, so we will need to setup an automation to update the Aria blueprint with a new commit id that is triggered when a new commit is merged to the main branch of our terraform files to update the deployment template, consider automated testing, and will need to make some decisions about how to handle application of potential updates to existing deployments.</p>
+<p>After that, you may have noticed that while my terraform files are saved in git, the aria blueprint for the service is managed by the service and I am not yet managing the blueprint in git. Aria fully supports managing blueprints with git and has some really elegant graphical interfaces that fully integrate with git and gitops methods so I am really looking forward to setting it up and will share a post with the details when I do.</p>
+<p>Thus far we have accounted for managing our terraform files and our aria blueprints with git, both of which are templates. the final step for full gitopsification will be to gitopsify the deployment values themselves. When we created the blueprint we created variable declarations and inputs such that when we create a deployment, we have to provide specific values that are sort of the centerpiece of the configuration management for these clusters. In general once we setup a cluster we should not need to change the template itself much unless we add a new capability. In general it is more common to change some configuration value for a deployment for some reason, maybe adding or removing nodes or any number of other things that you may want to manage with infracode.</p>
+<p>Accordingly when this service is final, I would like the process to be that when a file that includes all the needed input variables is approved and merged into a specific directory in a git repo, a webhook triggers a deployment or update whenever a deployment values file is created or updated. Further, I mentioned I like having the best of both worlds between graphical interfaces and gitops. I would like to create a custom resource to manage these deployment values files to make sure lifecycle events such as updating a configuration value for an existing deployment or deleting a values file are handled correctly. This way a user could execute a pull request or make an API call to upload a deployment values file, or use the deployment wizard in assembler to fill in the values, or use Aria Service Broker to expose the service with a nice form to allow the service to be consumed by gui but stil be fully gitops based.</p>
+<p>Once I get to this sort of final version of my k8s cluster deployment service, I will work on getting the clusters all setup with some open source application/service deployments, Tanzu Application Platform and some of our own custom application demos and do it all with end-to-end gitops. For me, this is a lot of fun, and I will share posts with my experience along the way and hope it is interesting and valuable for you.</p>
+<p>Thanks for reading!</p>
+</article>
+
+
+    </div><br class="my-4 astro-ZGKQLBXH"><footer class="footer astro-AIJBNNF4">
+    <nav class="nav astro-AIJBNNF4">
+        <div class="astro-AIJBNNF4">2021  &copy; Copyright notice |  <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-AIJBNNF4">Art Fewell&#39;s Blog</a>
+        <astro-island uid="Z1BHDED" component-url="/ModeLabel.3b836d0a.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;ModeLabel&quot;,&quot;value&quot;:true}" await-children=""><span slot="dark">(dark)</span></astro-island> theme on <a href="https://astro.build/" class="astro-AIJBNNF4">Astro</a></div>
+        <astro-island uid="1BbWTQ" component-url="/NetlifyIdentity.31726458.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;NetlifyIdentity&quot;,&quot;value&quot;:true}"></astro-island>
+    </nav>
+</footer>
+<div class="portal-root">
+    <astro-island uid="Z2cQ0ST" component-url="/SearchModal.6fa86f6b.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-ZGKQLBXH&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;SearchModal&quot;,&quot;value&quot;:true}"></astro-island>
+</div>
+        </main>
+    </div>
+</body>
+
+
+
+
+</html>

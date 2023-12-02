@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-OSURTGVX">
+    <head>
+        <!-- Use Google Fonts, if you don't wanna prefer a self-hosted version --><!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet"> --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Art Fewell&#39;s Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 1</title>
+    <meta name="title" content="Art Fewell's Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 1">
+    <meta name="description" content="In this 2 part series, I go over code that can scrape a website or subsection of a website, clean the data, and automate calling GPT-4 with context from the ingested documents with a prompt that successfully extracts desired content in a specified format.">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Open Graph Tags (Facebook) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Art Fewell's Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 1">
+    
+    <meta property="og:description" content="In this 2 part series, I go over code that can scrape a website or subsection of a website, clean the data, and automate calling GPT-4 with context from the ingested documents with a prompt that successfully extracts desired content in a specified format.">
+    
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Art Fewell's Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 1">
+    
+    <meta property="twitter:description" content="In this 2 part series, I go over code that can scrape a website or subsection of a website, clean the data, and automate calling GPT-4 with context from the ingested documents with a prompt that successfully extracts desired content in a specified format.">
+    
+
+    
+
+    <link rel="stylesheet" href="/assets/about.de9a8fb5.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.81cd968e.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.f11b79f2.css" /><script type="module" src="/hoisted.9c0718d3.js"></script></head>
+    <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div class="transition-colors">
+        <main class="mx-auto max-w-4xl px-4 md:px-0">
+            <style>astro-island,astro-slot{display:contents}</style><script>(self.Astro=self.Astro||{}).visible=(s,c,n)=>{const r=async()=>{await(await s())()};let i=new IntersectionObserver(e=>{for(const t of e)if(!!t.isIntersecting){i.disconnect(),r();break}});for(let e=0;e<n.children.length;e++){const t=n.children[e];i.observe(t)}},window.dispatchEvent(new Event("astro:visible"));var l;{const c={0:t=>t,1:t=>JSON.parse(t,o),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(JSON.parse(t,o)),5:t=>new Set(JSON.parse(t,o)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(JSON.parse(t)),9:t=>new Uint16Array(JSON.parse(t)),10:t=>new Uint32Array(JSON.parse(t))},o=(t,s)=>{if(t===""||!Array.isArray(s))return s;const[e,n]=s;return e in c?c[e](n):void 0};customElements.get("astro-island")||customElements.define("astro-island",(l=class extends HTMLElement{constructor(){super(...arguments);this.hydrate=()=>{if(!this.hydrator||this.parentElement&&this.parentElement.closest("astro-island[ssr]"))return;const s=this.querySelectorAll("astro-slot"),e={},n=this.querySelectorAll("template[data-astro-template]");for(const r of n){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(const r of s){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("name")||"default"]=r.innerHTML)}const a=this.hasAttribute("props")?JSON.parse(this.getAttribute("props"),o):{};this.hydrator(this)(this.Component,a,e,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),window.removeEventListener("astro:hydrate",this.hydrate),window.dispatchEvent(new CustomEvent("astro:hydrate"))}}connectedCallback(){!this.hasAttribute("await-children")||this.firstChild?this.childrenConnectedCallback():new MutationObserver((s,e)=>{e.disconnect(),this.childrenConnectedCallback()}).observe(this,{childList:!0})}async childrenConnectedCallback(){window.addEventListener("astro:hydrate",this.hydrate);let s=this.getAttribute("before-hydration-url");s&&await import(s),this.start()}start(){const s=JSON.parse(this.getAttribute("opts")),e=this.getAttribute("client");if(Astro[e]===void 0){window.addEventListener(`astro:${e}`,()=>this.start(),{once:!0});return}Astro[e](async()=>{const n=this.getAttribute("renderer-url"),[a,{default:r}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),i=this.getAttribute("component-export")||"default";if(!i.includes("."))this.Component=a[i];else{this.Component=a;for(const d of i.split("."))this.Component=this.Component[d]}return this.hydrator=r,this.hydrate},s,this)}attributeChangedCallback(){this.hydrator&&this.hydrate()}},l.observedAttributes=["props"],l))}</script><script>(self.Astro=self.Astro||{}).load=a=>{(async()=>await(await a())())()},window.dispatchEvent(new Event("astro:load"));</script><br class="my-4 astro-ZGKQLBXH"><header class="header astro-D4C5N2UC">
+    <div class="header__logo astro-D4C5N2UC">
+        <a href="/" class="avatar astro-D4C5N2UC">
+            <img class="header__logo-img astro-D4C5N2UC" src="/assets/mylogo.png" alt="Astro logo">
+        </a>
+    </div>
+    <div class="header__meta flex-1 astro-D4C5N2UC">
+        <h3 class="header__title dark:text-theme-dark-secondary astro-D4C5N2UC">
+            <a href="" class="astro-D4C5N2UC">Art Fewell&#39;s Blog</a>
+        </h3>
+        <div class="header__meta-more flex astro-D4C5N2UC">
+            <p class="header__desc dark:text-sky-200 astro-D4C5N2UC">
+                This site provides words, sentences, and paragraphs - all at no extra charge
+            </p>
+            <nav class="header__nav flex astro-D4C5N2UC">
+                <ul class="header__ref-list astro-D4C5N2UC">
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="27S3Gs" component-url="/SearchBtn.6c92d9d3.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;SearchBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2071 4.89344C19.0923 7.77862 19.3131 12.3193 16.8693 15.4578C16.8846 15.4713 16.8996 15.4854 16.9143 15.5L21.1569 19.7427C21.5474 20.1332 21.5474 20.7664 21.1569 21.1569C20.7664 21.5474 20.1332 21.5474 19.7427 21.1569L15.5 16.9143C15.4854 16.8996 15.4713 16.8846 15.4578 16.8693C12.3193 19.3131 7.77862 19.0923 4.89344 16.2071C1.76924 13.083 1.76924 8.01763 4.89344 4.89344C8.01763 1.76924 13.083 1.76924 16.2071 4.89344ZM14.7929 14.7929C17.1361 12.4498 17.1361 8.6508 14.7929 6.30765C12.4498 3.96451 8.6508 3.96451 6.30765 6.30765C3.96451 8.6508 3.96451 12.4498 6.30765 14.7929C8.6508 17.1361 12.4498 17.1361 14.7929 14.7929Z" fill="currentColor"></path></svg></button></astro-island>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" class="astro-D4C5N2UC"></path>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="/rss.xml" title="RSS" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" class="astro-D4C5N2UC"></path><path d="M4 4a16 16 0 0 1 16 16" class="astro-D4C5N2UC"></path><circle cx="5" cy="19" r="1" class="astro-D4C5N2UC"></circle>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="ZE0Bkh" component-url="/ModeSwitcherBtn.39e589ad.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;ModeSwitcherBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button></astro-island>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<nav class="nav py-3 astro-TATTABV7">
+    <ul class="nav-list dark:text-theme-dark-secondary astro-TATTABV7">
+         <li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/" title="home">Home</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/blog" title="blog">Blog</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/tags" title="tags">Tags</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/about" title="about">About</a>
+            </li>
+    </ul>
+</nav>
+<div class="content astro-ZGKQLBXH">
+        <div class="post__header astro-OSURTGVX">
+            <div class="post__tags astro-OSURTGVX">
+                <a class="post__tag astro-OSURTGVX" href="/tags/ChatGPT" title="ChatGPT">ChatGPT</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu" title="Tanzu">Tanzu</a><a class="post__tag astro-OSURTGVX" href="/tags/Platform Engineering" title="Platform Engineering">Platform Engineering</a><a class="post__tag astro-OSURTGVX" href="/tags/Kubernetes" title="Kubernetes">Kubernetes</a><a class="post__tag astro-OSURTGVX" href="/tags/Devops" title="Devops">Devops</a><a class="post__tag astro-OSURTGVX" href="/tags/AIops" title="AIops">AIops</a><a class="post__tag astro-OSURTGVX" href="/tags/Artificial Intelligence" title="Artificial Intelligence">Artificial Intelligence</a><a class="post__tag astro-OSURTGVX" href="/tags/Machine Learning" title="Machine Learning">Machine Learning</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu CLI" title="Tanzu CLI">Tanzu CLI</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu Application Platform" title="Tanzu Application Platform">Tanzu Application Platform</a>
+            </div>
+            <h1 class="post__title astro-OSURTGVX">Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 1</h1>
+            <h5 class="post__desc astro-OSURTGVX">
+                <a class="post__author astro-OSURTGVX" href="https://twitter.com/afewell" title="Art Fewell's twitter" target="_blank" rel="external">Art Fewell</a> |
+                <span class="post__date astro-OSURTGVX">Monday, April 3, 2023</span>
+            </h5>
+        </div><article class="prose dark:prose-dark astro-TE7CUYU6">
+    <p>For a project I am working on now, I want to create a list of Tanzu CLI commands in a specific format. Tanzu CLI has hundreds of commands each with different options. I need to look at the detailed documentation for command groups to get the level of detail I want to extract, which involves processing hundreds of pages of data.</p>
+<p>To automate this process, I am using the python scrapy web scraping library configured to crawl a website, or a subsection of a website. For this example, I wanted to identify all pages within the Tanzu Application Platform (TAP) 1.4 documentation that document the tanzu CLI plugins that are specific to TAP. Docs.vmware.com is a really massive website, it not only has the complete documentation for every single VMware product, it has documentation for every version of every current VMware product.</p>
+<p>I dont have any data on how big it is, but, its massive. Just crawling this entire site would be a very inefficient way to identify the specific documents I need, so I originally tried a simple filter to restrict the crawling behavior, which ended up being overly restrictive and not identifying all the documents I needed. I ended up implementing a multi-tiered filtering logic that strikes the right balance between finding all the relevant URLs I want while still being fast and efficient. I will explain in more detail in the scraping section below.</p>
+<p>Once the data is gathered and cleaned with scrapy, another function inserts the ingested text into a prompt and uses the openai python library to query GPT-4 with a prompt that successfully instructs GPT-4 to look through the provided text and extract the information I want based on a reference pattern, and formats its return in the exact format I specify in the prompt. I wrote a separate <a href="https://artfewell.com/blog/fewshot-command-extraction/">blog post about this prompt you can find here.</a></p>
+<h2 id="scraping-the-pages-that-you-want">Scraping the pages that you want</h2>
+<p>Here is my scrapy code:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">import scrapy</span></span>
+<span class="line"><span style="color: #c9d1d9">import os</span></span>
+<span class="line"><span style="color: #c9d1d9">from scrapy.linkextractors import LinkExtractor</span></span>
+<span class="line"><span style="color: #c9d1d9">from scrapy.spiders import CrawlSpider, Rule</span></span>
+<span class="line"><span style="color: #c9d1d9">from urllib.parse import urlparse</span></span>
+<span class="line"><span style="color: #c9d1d9">from scrapy.selector import Selector</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">class UrlScraperSpider(CrawlSpider):</span></span>
+<span class="line"><span style="color: #c9d1d9">    name = 'url_scraper'</span></span>
+<span class="line"><span style="color: #c9d1d9">    allowed_domains = [os.environ.get('ALLOWED_DOMAINS')]</span></span>
+<span class="line"><span style="color: #c9d1d9">    start_urls = [os.environ.get('START_URLS')]</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">    rules = (</span></span>
+<span class="line"><span style="color: #c9d1d9">        Rule(LinkExtractor(allow=os.environ.get('ALLOW_RULE')), callback='parse_item', follow=True),</span></span>
+<span class="line"><span style="color: #c9d1d9">    )</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">    def __init__(self, *args, **kwargs):</span></span>
+<span class="line"><span style="color: #c9d1d9">        super(UrlScraperSpider, self).__init__(*args, **kwargs)</span></span>
+<span class="line"><span style="color: #c9d1d9">        self.urls = set()</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">    def parse_item(self, response):</span></span>
+<span class="line"><span style="color: #c9d1d9">        links = LinkExtractor(allow=os.environ.get('PARSING_RULE')).extract_links(response)</span></span>
+<span class="line"><span style="color: #c9d1d9">        for link in links:</span></span>
+<span class="line"><span style="color: #c9d1d9">            url = urlparse(link.url)._replace(fragment='').geturl()</span></span>
+<span class="line"><span style="color: #c9d1d9">            self.urls.add(url)</span></span>
+<span class="line"><span style="color: #c9d1d9">        return {}</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">    def closed(self, reason):</span></span>
+<span class="line"><span style="color: #c9d1d9">        with open('urls.txt', 'w') as f:</span></span>
+<span class="line"><span style="color: #c9d1d9">            f.write('\n'.join(sorted(self.urls)))</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">class HtmlScraperSpider(scrapy.Spider):</span></span>
+<span class="line"><span style="color: #c9d1d9">    name = 'html_scraper'</span></span>
+<span class="line"><span style="color: #c9d1d9">    allowed_domains = [os.environ.get('ALLOWED_DOMAINS')]</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">    def __init__(self, *args, **kwargs):</span></span>
+<span class="line"><span style="color: #c9d1d9">        super(HtmlScraperSpider, self).__init__(*args, **kwargs)</span></span>
+<span class="line"><span style="color: #c9d1d9">        os.makedirs('/scrapy/html', exist_ok=True)</span></span>
+<span class="line"><span style="color: #c9d1d9">        self.start_urls = self.get_start_urls()</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">    def get_start_urls(self):</span></span>
+<span class="line"><span style="color: #c9d1d9">        with open('urls.txt', 'r') as f:</span></span>
+<span class="line"><span style="color: #c9d1d9">            urls = f.read().split('\n')</span></span>
+<span class="line"><span style="color: #c9d1d9">        return urls</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">    def parse(self, response):</span></span>
+<span class="line"><span style="color: #c9d1d9">        filename = os.path.join('/', 'scrapy', 'html', response.url.split('/')[-1])</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">        content = response.css('div.rhs-center.article-wrapper').get()</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">        if content:</span></span>
+<span class="line"><span style="color: #c9d1d9">            content = Selector(text=content).xpath('//text()').getall()</span></span>
+<span class="line"><span style="color: #c9d1d9">            content = ''.join(content).strip()</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">            with open(filename, 'w') as f:</span></span>
+<span class="line"><span style="color: #c9d1d9">                f.write(content)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">        return {}</span></span></code></pre>
+<p>The way I have it configured now is to use one process to gather the URL’s that I want to scrape from the site, which is handled by the UrlScraperSpider class in the above code. I then run a separate function to download and clean each of the URL’s identified by UrlScraperSpider. This second function is called HtmlScraperSpider in the above code.</p>
+<h3 id="about-urlscraperspider">About UrlScraperSpider</h3>
+<p>If you look at the scraper code, you can see I gather 4 environmental variables for this function: ALLOWED_DOMAINS, START_URLS, ALLOW_RULE and PARSING_RULE. To explain how this works, it will help to provide the values I used for this example:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">export ALLOWED_DOMAINS=docs.vmware.com</span></span>
+<span class="line"><span style="color: #c9d1d9">export START_URLS='https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/index.html'</span></span>
+<span class="line"><span style="color: #c9d1d9">export ALLOW_RULE="en/VMware-Tanzu-Application-Platform/1.4/*"</span></span>
+<span class="line"><span style="color: #c9d1d9">export PARSING_RULE='en/VMware-Tanzu-Application-Platform/1.4/tap/cli-*'</span></span></code></pre>
+<p>Here I will explain how each of these values work. Please keep in mind these need to be from least restrictive to most restrictive, in order from top to bottom.</p>
+<p>The ALLOWED_DOMAINS value is the highest level filter, in this case it ensures the crawler only looks at urls within docs.vmware.com.</p>
+<p>The START_URLS provides the seed page that the crawler starts with. The crawler then works recursively to map all links it can find on this page, and then recursively maps until it maps every link on every page it can find from this seed page. In this specific case, if not for the ALLOW_RULE, it would map the entire docs.vmware.com site and would map even more if it did not have the ALLOWED_DOMAINS filter. It is important to make sure you include a start url that is linked through recursive mapping to the target URL’s you want to collect.</p>
+<p>The ALLOW_RULE restricts the behavior of the crawler, and so the crawler will only crawl pages that match the pattern specified in the ALLOW_RULE.</p>
+<p>I originally used the ALLOW_RULE to try to find all the pages I wanted, and it did have results, which highlights a tricky aspect of this project … do you know how many pages match your pattern? This may be known at times, but often times it is not, so you need a mechanism to ensure your results are accurate. In my case, I ran an instance of UrlScraperSpider with less restrictive filters to gather a much larger list of URLs, and then used <code>cat urls.txt | grep &#x3C;pattern> | wc -l</code> to see if I was actually finding all the URLs, and I discovered a problem with the filtering logic.</p>
+<p>Using only the ALLOW_RULE can run into an issue if a page you want is a child of a page you dont want. Remember the crawler starts at the starting rule, and it has to crawl through pages starting with the start URL, and then navigates through linked pages so long as each page it finds matches the ALLOW_RULE pattern. But if a page that doesnt match your pattern sits between the start URL and pages with the pattern you want, the crawler will not find all the pages you want. In that sense, eliminating the ALLOW_RULE entirely should still eventually get your desired results, but in a large site like docs.vmware.com, this would mean making the crawler crawl through tons of irrelevant pages to find your data.</p>
+<p>The PARSING_RULE does not restrict the behaviour of the crawler. In the code above, the <code>__init__</code> function within the UrlScraperSpider class initiates the crawler using the ALLOWED_DOMAINS, START_URLS, and ALLOW_RULE to define the behaviour of the crawler. After this function crawls the website, it then calls the parse_item function, which applies the PARSING_RULE, which filters all the URLs that were crawled to only the URL’s that match the pattern defined in the PARSING_RULE.</p>
+<p>With the combination of these filters, I restricted the crawler to only crawl and gather the URL’s for the Tanzu Application Platform 1.4 documentation. Since I gathered the URLs for the entire TAP 1.4 documentation, I can be sure I can find all of the URLs in the documentation that match the pattern I want in the PARSING_RULE. The code then parses the URLs to only those I want, and creates a urls.txt file with the results. I could have had it output json and may eventually, but as it is it places one complete URL on each line in a text file which is all the structure I need to loop through each listed URL.</p>
+<h3 id="the-htmlscraperspider">The HtmlScraperSpider</h3>
+<p>Once the UrlScraperSpider generates the urls.txt file, I call the HtmlScraperSpider to process the urls.txt file, and download each of the URLs, parse the section of the page I want to keep, and then clean the metacharacters while preserving new lines and spacing as that context is important to properly extract the data I want.</p>
+<p>The most important part of this class to highlight is in its parse function, specifically the line <code>content = response.css('div.rhs-center.article-wrapper').get()</code>. This line instructs the parser to only keep content that is within the tag div.rhs-center.article-wrapper, which is a tag that is specific to the docs.vmware.com website and highlights a challenge with scraping data from websites … there is tons of irrelevant metadata on most sites.</p>
+<p>In some cases you may want all the data from the webpage, but in most cases you probably want data from the main body of visible text on the page, which in many cases is much smaller than all the irrelevant metadata. You could just send the whole pages worth of data and metadata to the AI model and I do suspect that it is often smart enough to figure it out, but, that is problematic on many levels.</p>
+<p>In this case, I am fortunate that I am only gathering data from docs.vmware.com, and this site has a very consistent structure. I can use dev tools to find that for documentation page, the tag <code>div.rhs-center.article-wrapper</code> is a consistent wrapper just for the main visible text. Accordingly, as long as I am only gathering data from docs.vmware.com, this should work pretty consistently, but, if I want to target a different website, I would on a site-by-site basis need to adjust this value, and that is only if a given site is consistently organized and tagged, if not, this could be a much bigger challenge.</p>
+<p>In a future post, I will explore python’s unstructured library, which provides a universal method for ingesting and organizing not just HTML, but bunches of different types of documents, and then applying intelligent tagging to the various sections of the input document, such that you could conceivably create a universal ingester. This could potentially allow you to target the main body of text with one consistent logic on a wide variety of websites for example. I havent played with it enough yet to know if it will work ideally for this use case, but it looks very promising and I will definitely write some future posts about this.</p>
+<h4 id="additional-challenges-with-token-prediction-and-chunking">Additional challenges with token prediction and chunking</h4>
+<p>There is sort of a 2-fold big whammy problem here, you may not care about cost as it pertains to finding the answer you want, but you almost certainly dont want to pay more by including a bunch of irrelevant data from ingested pages. And worse, what if all the irrelevant data makes the responses from the AI less accurate, which I imagine it would to at least some extent. And so you end up paying a lot more for worse results.</p>
+<p>Another big challenge this complicates is data chunking. How large is the content you want to send to the AI? If its larger than you can send in one query, you have to add logic to break your data into chunks, which is very tricky. If you arbitrarily break your data into chunks, you will most likely break it in the middle of some important logic, and so when the AI has to look separately at each chunk of data, it may not be able to find the relevant data you need.</p>
+<p>The reality is you may not be able to avoid the need to chunk data at all, its a standard part of most data processing pipelines and I have blogged about some chunking methods before. While the provided code should work well in this case, I am making some shortcuts here that I will need to address soon … that is, I really need to add a token predictor to predict token usage to determine if it needs to be chunked. And if data does need to be chunked, what is the best way to chunk it and how do you create or configure a chunker that will behave how you want it to.</p>
+<p>In this specific case however, I took a shortcut to bypass the chunking issue at the expense of cost and possibly missing important data … so I will not consider this code complete until I add those capabilities, which I will add and share in a blog post soon.</p>
+<p>The shortcut I took is, in this case, the documentation for the Tanzu CLI commands is already broken up into relatively small sections, and accordingly I think I can get away with skipping the chunking for now. That being said, I have already found that some of these pages + the AI response is more than the 4096 tokens than can be handled by gpt-3.5-turbo, but I <em>think</em> the pages + responses will be small enough to fit into the larger 8096 token limit I can access through the GPT-4 API. Note that GPT-4 has an API that can handle 32k tokens which will be amazing for certain use cases, but all GPT-4 access is in beta and I only have been given access to the 8k model so far. Even still, all GPT-4 access is orders of magnitude more expensive than gpt-3.5, and GPT-4 32k is even more expensive per token than gpt-4 8k. These larger contexts will unlock powerful use cases, but in most cases where chunking can work, it will be well worth it.</p>
+<p>So since I am not doing any chunking of my data in this code, the most obvious inneficiency is that I am paying substantially more to use GPT-4, and in this case I have already verified that, in the cases where the pages are short enough to use gpt-3.5, it produces comparable code. So in the near future I will add a token predictor and depending on the prediction to determine whether to send to gpt-3.5, to send to gpt-4, or if larger, I will need to find a chunking method that works optimally with my data and target goal. I may end up adding a vectorizing step and query a vectordb for data rather than trying to preserve the exact original context as I am in this code. I am sure I will end up testing a few approaches and will write additional blogs with the results I find. In general I find that vectorizing and integrating a vector db search can ease some of the challenges</p>
+<h2 id="summary-and-part-2">Summary and part 2</h2>
+<p>This post is already pretty long, and since the scraping job and the calls to openAI are separate functions. It makes sense to break this blog into 2 parts. The first part here described how we are doing the scraping and cleaning. Part 2 will cover the rest of the process to automatically insert each piece of source data into a prompt that is used to query openAI as many times as needed for the dataset, and organize the response into a common json schema.</p>
+<p>I have already completed the code for part 2, so I should be able to have the blog published within a day or 2, so please stay tuned for part 2! Thanks for reading!</p>
+</article>
+
+
+    </div><br class="my-4 astro-ZGKQLBXH"><footer class="footer astro-AIJBNNF4">
+    <nav class="nav astro-AIJBNNF4">
+        <div class="astro-AIJBNNF4">2021  &copy; Copyright notice |  <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-AIJBNNF4">Art Fewell&#39;s Blog</a>
+        <astro-island uid="Z1BHDED" component-url="/ModeLabel.3b836d0a.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;ModeLabel&quot;,&quot;value&quot;:true}" await-children=""><span slot="dark">(dark)</span></astro-island> theme on <a href="https://astro.build/" class="astro-AIJBNNF4">Astro</a></div>
+        <astro-island uid="1BbWTQ" component-url="/NetlifyIdentity.31726458.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;NetlifyIdentity&quot;,&quot;value&quot;:true}"></astro-island>
+    </nav>
+</footer>
+<div class="portal-root">
+    <astro-island uid="Z2cQ0ST" component-url="/SearchModal.6fa86f6b.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-ZGKQLBXH&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;SearchModal&quot;,&quot;value&quot;:true}"></astro-island>
+</div>
+        </main>
+    </div>
+</body>
+
+
+
+
+</html>

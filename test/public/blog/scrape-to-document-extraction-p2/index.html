@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-OSURTGVX">
+    <head>
+        <!-- Use Google Fonts, if you don't wanna prefer a self-hosted version --><!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet"> --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Art Fewell&#39;s Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 2</title>
+    <meta name="title" content="Art Fewell's Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 2">
+    <meta name="description" content="In this 2 part series, I go over code that can scrape a website or subsection of a website, clean the data, and automate calling GPT-4 with context from the ingested documents with a prompt that successfully extracts desired content in a specified format.">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Open Graph Tags (Facebook) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Art Fewell's Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 2">
+    
+    <meta property="og:description" content="In this 2 part series, I go over code that can scrape a website or subsection of a website, clean the data, and automate calling GPT-4 with context from the ingested documents with a prompt that successfully extracts desired content in a specified format.">
+    
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Art Fewell's Blog | Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 2">
+    
+    <meta property="twitter:description" content="In this 2 part series, I go over code that can scrape a website or subsection of a website, clean the data, and automate calling GPT-4 with context from the ingested documents with a prompt that successfully extracts desired content in a specified format.">
+    
+
+    
+
+    <link rel="stylesheet" href="/assets/about.de9a8fb5.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.81cd968e.css" />
+<link rel="stylesheet" href="/assets/ChatGPTCanYouImproveThisBash.f11b79f2.css" /><script type="module" src="/hoisted.9c0718d3.js"></script></head>
+    <body class="font-sans antialiased min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div class="transition-colors">
+        <main class="mx-auto max-w-4xl px-4 md:px-0">
+            <style>astro-island,astro-slot{display:contents}</style><script>(self.Astro=self.Astro||{}).visible=(s,c,n)=>{const r=async()=>{await(await s())()};let i=new IntersectionObserver(e=>{for(const t of e)if(!!t.isIntersecting){i.disconnect(),r();break}});for(let e=0;e<n.children.length;e++){const t=n.children[e];i.observe(t)}},window.dispatchEvent(new Event("astro:visible"));var l;{const c={0:t=>t,1:t=>JSON.parse(t,o),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(JSON.parse(t,o)),5:t=>new Set(JSON.parse(t,o)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(JSON.parse(t)),9:t=>new Uint16Array(JSON.parse(t)),10:t=>new Uint32Array(JSON.parse(t))},o=(t,s)=>{if(t===""||!Array.isArray(s))return s;const[e,n]=s;return e in c?c[e](n):void 0};customElements.get("astro-island")||customElements.define("astro-island",(l=class extends HTMLElement{constructor(){super(...arguments);this.hydrate=()=>{if(!this.hydrator||this.parentElement&&this.parentElement.closest("astro-island[ssr]"))return;const s=this.querySelectorAll("astro-slot"),e={},n=this.querySelectorAll("template[data-astro-template]");for(const r of n){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(const r of s){const i=r.closest(this.tagName);!i||!i.isSameNode(this)||(e[r.getAttribute("name")||"default"]=r.innerHTML)}const a=this.hasAttribute("props")?JSON.parse(this.getAttribute("props"),o):{};this.hydrator(this)(this.Component,a,e,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),window.removeEventListener("astro:hydrate",this.hydrate),window.dispatchEvent(new CustomEvent("astro:hydrate"))}}connectedCallback(){!this.hasAttribute("await-children")||this.firstChild?this.childrenConnectedCallback():new MutationObserver((s,e)=>{e.disconnect(),this.childrenConnectedCallback()}).observe(this,{childList:!0})}async childrenConnectedCallback(){window.addEventListener("astro:hydrate",this.hydrate);let s=this.getAttribute("before-hydration-url");s&&await import(s),this.start()}start(){const s=JSON.parse(this.getAttribute("opts")),e=this.getAttribute("client");if(Astro[e]===void 0){window.addEventListener(`astro:${e}`,()=>this.start(),{once:!0});return}Astro[e](async()=>{const n=this.getAttribute("renderer-url"),[a,{default:r}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),i=this.getAttribute("component-export")||"default";if(!i.includes("."))this.Component=a[i];else{this.Component=a;for(const d of i.split("."))this.Component=this.Component[d]}return this.hydrator=r,this.hydrate},s,this)}attributeChangedCallback(){this.hydrator&&this.hydrate()}},l.observedAttributes=["props"],l))}</script><script>(self.Astro=self.Astro||{}).load=a=>{(async()=>await(await a())())()},window.dispatchEvent(new Event("astro:load"));</script><br class="my-4 astro-ZGKQLBXH"><header class="header astro-D4C5N2UC">
+    <div class="header__logo astro-D4C5N2UC">
+        <a href="/" class="avatar astro-D4C5N2UC">
+            <img class="header__logo-img astro-D4C5N2UC" src="/assets/mylogo.png" alt="Astro logo">
+        </a>
+    </div>
+    <div class="header__meta flex-1 astro-D4C5N2UC">
+        <h3 class="header__title dark:text-theme-dark-secondary astro-D4C5N2UC">
+            <a href="" class="astro-D4C5N2UC">Art Fewell&#39;s Blog</a>
+        </h3>
+        <div class="header__meta-more flex astro-D4C5N2UC">
+            <p class="header__desc dark:text-sky-200 astro-D4C5N2UC">
+                This site provides words, sentences, and paragraphs - all at no extra charge
+            </p>
+            <nav class="header__nav flex astro-D4C5N2UC">
+                <ul class="header__ref-list astro-D4C5N2UC">
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="27S3Gs" component-url="/SearchBtn.6c92d9d3.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;SearchBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2071 4.89344C19.0923 7.77862 19.3131 12.3193 16.8693 15.4578C16.8846 15.4713 16.8996 15.4854 16.9143 15.5L21.1569 19.7427C21.5474 20.1332 21.5474 20.7664 21.1569 21.1569C20.7664 21.5474 20.1332 21.5474 19.7427 21.1569L15.5 16.9143C15.4854 16.8996 15.4713 16.8846 15.4578 16.8693C12.3193 19.3131 7.77862 19.0923 4.89344 16.2071C1.76924 13.083 1.76924 8.01763 4.89344 4.89344C8.01763 1.76924 13.083 1.76924 16.2071 4.89344ZM14.7929 14.7929C17.1361 12.4498 17.1361 8.6508 14.7929 6.30765C12.4498 3.96451 8.6508 3.96451 6.30765 6.30765C3.96451 8.6508 3.96451 12.4498 6.30765 14.7929C8.6508 17.1361 12.4498 17.1361 14.7929 14.7929Z" fill="currentColor"></path></svg></button></astro-island>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" class="astro-D4C5N2UC"></path>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <a href="/rss.xml" title="RSS" class="astro-D4C5N2UC">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" class="astro-D4C5N2UC"></path><path d="M4 4a16 16 0 0 1 16 16" class="astro-D4C5N2UC"></path><circle cx="5" cy="19" r="1" class="astro-D4C5N2UC"></circle>
+</svg>
+                        </a>
+                    </li>
+                    <li class="astro-D4C5N2UC">
+                        <astro-island uid="ZE0Bkh" component-url="/ModeSwitcherBtn.39e589ad.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-D4C5N2UC&quot;]}" ssr="" client="visible" opts="{&quot;name&quot;:&quot;ModeSwitcherBtn&quot;,&quot;value&quot;:true}" await-children=""><button><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button></astro-island>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<nav class="nav py-3 astro-TATTABV7">
+    <ul class="nav-list dark:text-theme-dark-secondary astro-TATTABV7">
+         <li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/" title="home">Home</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/blog" title="blog">Blog</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/tags" title="tags">Tags</a>
+            </li><li class="astro-TATTABV7">
+                <a class="hover:underline astro-TATTABV7" href="/about" title="about">About</a>
+            </li>
+    </ul>
+</nav>
+<div class="content astro-ZGKQLBXH">
+        <div class="post__header astro-OSURTGVX">
+            <div class="post__tags astro-OSURTGVX">
+                <a class="post__tag astro-OSURTGVX" href="/tags/ChatGPT" title="ChatGPT">ChatGPT</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu" title="Tanzu">Tanzu</a><a class="post__tag astro-OSURTGVX" href="/tags/Platform Engineering" title="Platform Engineering">Platform Engineering</a><a class="post__tag astro-OSURTGVX" href="/tags/Kubernetes" title="Kubernetes">Kubernetes</a><a class="post__tag astro-OSURTGVX" href="/tags/Devops" title="Devops">Devops</a><a class="post__tag astro-OSURTGVX" href="/tags/AIops" title="AIops">AIops</a><a class="post__tag astro-OSURTGVX" href="/tags/Artificial Intelligence" title="Artificial Intelligence">Artificial Intelligence</a><a class="post__tag astro-OSURTGVX" href="/tags/Machine Learning" title="Machine Learning">Machine Learning</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu CLI" title="Tanzu CLI">Tanzu CLI</a><a class="post__tag astro-OSURTGVX" href="/tags/Tanzu Application Platform" title="Tanzu Application Platform">Tanzu Application Platform</a>
+            </div>
+            <h1 class="post__title astro-OSURTGVX">Automated Data Ingestion and AI-Assisted Extraction with GPT-4 and example extraction from VMware Tanzu documentation - Part 2</h1>
+            <h5 class="post__desc astro-OSURTGVX">
+                <a class="post__author astro-OSURTGVX" href="https://twitter.com/afewell" title="Art Fewell's twitter" target="_blank" rel="external">Art Fewell</a> |
+                <span class="post__date astro-OSURTGVX">Monday, April 3, 2023</span>
+            </h5>
+        </div><article class="prose dark:prose-dark astro-TE7CUYU6">
+    <p>Picking up from where we left off from <a href="./scrape-to-document-extraction.md">part 1 of this series</a>, we finished covering the scraping and cleaning functions, and now we will get into calling the Open AI API’s using the openai python library, which makes it really simple.</p>
+<p>The HtmlScraperSpider class that we covered in part 1 downloaded each of the URL’s that we discovered with the UrlScraperSpider class. For this example I had set the scraper to download the files into the /scrapy/html directory in my local filesystem. Next, I want to present each page that I downloaded to the AI model along with instructions about how what we want it to do with the data that we provide. This query we sent to the openai api is referred to as a prompt. Until gpt-3.5-turbo, every example I am aware of used the openai completions endpoint to query the model, and with that endpoint, the field you would pass the query to was called the prompt field. But, with gpt3.5 and gpt4, there is a new format using the ChatCompletions endpoint, which allows you to use a new “messages” format, which is a more flexible and descriptive method to provide the query. I dont know if the chatcompletions endpoint was available before gpt-3.5-turbo, but as far as I can tell, you cannot query the old completions endpoint for gpt3.5 and gpt4, you have to use the chatcompletions endpoint as shown in the code I will share below.</p>
+<p>One of the reasons I draw attention to this point is, this point was not obvious to me. I am sure there are lots of examples on the web that share the chatcompletions endpoint, but when I was initially searching for how to query the newer models, I found a lot of outdated data using the old completions endpoint, and I didnt find the information on the openai website to be very helpful. But, the best place to find information about openai APIs is the <a href="https://github.com/openai/openai-cookbook">openai cookbook</a>, which has lots of great detail on how to query the newer models for a variety of use cases.</p>
+<p>For my use case, I want to provide each page I downloaded with my prompt, one page at a time, so that openai can look through each page to find each command and usage examples. This is very different from say, making a chatbot, which I found to be a much more streamlined process because of libraries like langchain and llamaindex. With the chatbot use case and llamaindex, its pretty easy to have it ingest a variety of data formats and have them ingested into a vector db, that provides relevant search results from your data to the gpt api, so the AI model has context from your data for which to answer a question. I think things like cleaning and chunking are a bit more forgiving in that context as your query will help find the relevant text to send to the model, and will send multiple chunks if your query has enough token space, which can help deal with a less refined chunking methodology. I do think that the chatbot use case is equally nuanced but more forgiving if your dataset is imperfect.</p>
+<p>But, in the chatbot model, I dont think there would be any way to do what I want, which is extract every single tanzu cli command from dozens of different pages. So accordingly I am using the approach to sequentially present all of my data to the model, one page at a time. As I mentioned in <a href="./scrape-to-document-extraction.md">part 1</a>, I am taking some shortcuts so I shouldnt need to chunk my data in this case, but if I were, I would still send each chunk sequentially, but I would be careful to try to use a chunking method that did not carelessly chunk the data as this could likely lead to obscuring the context and reducing the accuracy of the model.</p>
+<p>I found the simplest way to get this method working accurately was to create a function that called openai api with a single pages data, I have saved this code in a file called openai.py. Then I created a main.py file which uses a separate function that loops through each document in the directory of pages that was downloaded by the HtmlScraperSpider, and calls the function from the openaicall.py file with the text from each file, one by one until we have looped through each page.</p>
+<p>To best understand these files, it will be easiest if I explain the openaicall.py file first in the context of a single call, and after we will look at the main.py call to see how we loop through all of the source documents.</p>
+<h2 id="openaicallpy">openaicall.py:</h2>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">import os</span></span>
+<span class="line"><span style="color: #c9d1d9">import json</span></span>
+<span class="line"><span style="color: #c9d1d9">import openai</span></span>
+<span class="line"><span style="color: #c9d1d9">import logging</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Set up an error logger with a specific name and level</span></span>
+<span class="line"><span style="color: #c9d1d9">error_logger = logging.getLogger('error_logger')</span></span>
+<span class="line"><span style="color: #c9d1d9">error_logger.setLevel(logging.ERROR)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Create a file handler to log errors</span></span>
+<span class="line"><span style="color: #c9d1d9">error_file_handler = logging.FileHandler('openaicall_error_log.txt')</span></span>
+<span class="line"><span style="color: #c9d1d9">error_file_handler.setLevel(logging.ERROR)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Set up an action logger with a specific name and level</span></span>
+<span class="line"><span style="color: #c9d1d9">action_logger = logging.getLogger('action_logger')</span></span>
+<span class="line"><span style="color: #c9d1d9">action_logger.setLevel(logging.INFO)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Create a file handler to log actions</span></span>
+<span class="line"><span style="color: #c9d1d9">action_file_handler = logging.FileHandler('openaicall_action_log.txt')</span></span>
+<span class="line"><span style="color: #c9d1d9">action_file_handler.setLevel(logging.INFO)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Create a logging format</span></span>
+<span class="line"><span style="color: #c9d1d9">formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')</span></span>
+<span class="line"><span style="color: #c9d1d9">error_file_handler.setFormatter(formatter)</span></span>
+<span class="line"><span style="color: #c9d1d9">action_file_handler.setFormatter(formatter)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Add the file handlers to the loggers</span></span>
+<span class="line"><span style="color: #c9d1d9">error_logger.addHandler(error_file_handler)</span></span>
+<span class="line"><span style="color: #c9d1d9">action_logger.addHandler(action_file_handler)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Define the filename for the JSON file</span></span>
+<span class="line"><span style="color: #c9d1d9">json_filename = 'openai_responses.json'</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">def save_response_to_json(response, filename):</span></span>
+<span class="line"><span style="color: #c9d1d9">    try:</span></span>
+<span class="line"><span style="color: #c9d1d9">        data = []</span></span>
+<span class="line"><span style="color: #c9d1d9">        if os.path.exists(filename):</span></span>
+<span class="line"><span style="color: #c9d1d9">            with open(filename, 'r') as f:</span></span>
+<span class="line"><span style="color: #c9d1d9">                data = json.load(f)</span></span>
+<span class="line"><span style="color: #c9d1d9">        data.append(response)</span></span>
+<span class="line"><span style="color: #c9d1d9">        with open(filename, 'w') as f:</span></span>
+<span class="line"><span style="color: #c9d1d9">            json.dump(data, f, indent=4)</span></span>
+<span class="line"><span style="color: #c9d1d9">    except Exception as e:</span></span>
+<span class="line"><span style="color: #c9d1d9">        logger.error(f"Error in save_response_to_json: {e}")</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">def call_openai_api(text, api_key):</span></span>
+<span class="line"><span style="color: #c9d1d9">    try:</span></span>
+<span class="line"><span style="color: #c9d1d9">        openai.api_key = api_key</span></span>
+<span class="line"><span style="color: #c9d1d9">        messages = [</span></span>
+<span class="line"><span style="color: #c9d1d9">            {</span></span>
+<span class="line"><span style="color: #c9d1d9">                "role": "system",</span></span>
+<span class="line"><span style="color: #c9d1d9">                "content": "You are an AI language model. Assist the user by answering their query with answers derived from the provided Context."</span></span>
+<span class="line"><span style="color: #c9d1d9">            },</span></span>
+<span class="line"><span style="color: #c9d1d9">            {</span></span>
+<span class="line"><span style="color: #c9d1d9">                "role": "user",</span></span>
+<span class="line"><span style="color: #c9d1d9">                "content": f"Example:\n---###---\nCommand: `tanzu apps clustersupplychain list`\nExample Usage:\n```sh\ntanzu apps clustersupplychain list\nNAME                 READY   AGE\nbasic-image-to-url   Ready   11d\nsource-to-url        Ready   11d\n```\nCommand:`tanzu apps clustersupplychain get SUPPLYCHAIN-NAME`\nExample Usage:\n```sh\ntanzu apps cluster-supply-chain get source-to-url\n---\n# source-to-url: Ready\n---\nSupply Chain Selectors\n   TYPE          KEY                                   OPERATOR   VALUE\n   expressions   apps.tanzu.vmware.com/workload-type   In         web\n   expressions   apps.tanzu.vmware.com/workload-type   In         server\n   expressions   apps.tanzu.vmware.com/workload-type   In         worker\n```\n---###---\nContent:\n---###---\n{text}\n---###---\n\nIdentify the pattern and format shown in the example. Examine the Content for commands and example usage patterns like those shown in the example. Your response should only include the Command and Example usage for each relevant item you found in the Content. Your response should be formatted exactly the same way as the example, and your response should not include any other details."</span></span>
+<span class="line"><span style="color: #c9d1d9">            }</span></span>
+<span class="line"><span style="color: #c9d1d9">        ]</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">        completions = openai.ChatCompletion.create(</span></span>
+<span class="line"><span style="color: #c9d1d9">            model="gpt-4",</span></span>
+<span class="line"><span style="color: #c9d1d9">            messages=messages,</span></span>
+<span class="line"><span style="color: #c9d1d9">            n=1,</span></span>
+<span class="line"><span style="color: #c9d1d9">            temperature=0.5,</span></span>
+<span class="line"><span style="color: #c9d1d9">        )</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">        action_logger.info(f"OpenAI API call made for text: {text[:100]}...")  # Log the API call action (truncated text for brevity)</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">        response = completions.choices[0].to_dict()</span></span>
+<span class="line"><span style="color: #c9d1d9">        save_response_to_json(response, json_filename)</span></span>
+<span class="line"><span style="color: #c9d1d9">        return response</span></span>
+<span class="line"><span style="color: #c9d1d9">    except Exception as e:</span></span>
+<span class="line"><span style="color: #c9d1d9">        error_logger.error(f"Error in call_openai_api: {e}")</span></span>
+<span class="line"><span style="color: #c9d1d9">        return None</span></span></code></pre>
+<p>The first part of this file is just generic scaffolding to setup standard logging and other generic stuff. Where is starts to get interesting is the call_openai_api function. The first thing to point out about this is, the function accepts 2 inputs: text, and api_key. You may notice that the api key is neither defined nor imported in this file, and this is because we will execute this function by calling it from the main.py file I will share below, and the main.py file will send the api_key when it calls the call_openai_api function. But, when I was building this file, I executed it directly, and you too could use this as a reference for your own use, but note that you will need to define or better, import your openai api key from an os envar or secrets provider, and add a line that calls the function.</p>
+<p>An important detail about the api_key is, if you are calling the call_openai_api function from a separate file as I do, you cannot simply import environmental variables into the openaicall.py file like `openai_api_key = os.environ.get(‘OPENAI_API_KEY’)’ as you can when you execute openaicall.py directly. The reason why is that when you execute openaicall directly, you directly spawn the process it runs in from your environment, so your envars are accessible to it. But, when you call it from a separate file as I do with main.py, it is main.py that spawns the process that the call_openai_api function runs within, and so it cannot directly access your os envars, and you have to use a method to pass the value to the called function. So the net net is, use it like it is above if you intend to call it from a separate process, but if you want to execute the call directly you will need to add or import the key within the openaicall.py file.</p>
+<p>Moving on, if you look at the  call_openai_api function in the openaicall.py file, skip past the messages and you can see the line <code>completions = openai.ChatCompletion.create</code>. The <code>openai.ChatCompletion.create</code> part of that statement is what defines that we are calling the openai ChatCompletion endpoint. If you have tried to call the newer models from older code, this is the key part that changed, we used to call the openai.Completion.create endpoint, which will not work with the newer models. In addition to just calling the newer endpoint name, there are also some schema differences, the most notable being the messages field and format. With the old completions endpoint, there was no messages field, you put your query into the prompt field, and it was just one string. While you can put very complex as I did in the second message shown, the new messages format is significantly more expressive and really offers an updated approach towards prompt engineering that can be very interesting. There are a lot of great examples in the <a href="https://github.com/openai/openai-cookbook">openai cookbook</a> of different creative ways to use the messages format for different use cases.</p>
+<p>If you look at the messages I included, you will see I included 2 messages, where the first provides an instruction to the model for how it should behave when approaching the question. The second message is my prompt, which includes a 2-shot example that defines both the pattern of the data I want it to find and the format I want it to return the found data in. The prompt is in a single string format so its hard to read, so I will put it in a readable format below. But first I wanted to mention if you are not familiar with the term 2-shot I used in the previous sentence, what this means is that I provide it with 2 examples I want it to emulate. You may have seen terms like zero-shot and few-shot in papers about AI models as they are common terms to describe methods used for testing AI models. If I were have tried to describe the items I want found and how I wanted the return without providing examples (and assuming the model wasnt previously trained on my specific example), that would have been considered a zero-shot prompt.</p>
+<p>Here is my prompt in a readable format:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">Example:</span></span>
+<span class="line"><span style="color: #c9d1d9">---###---</span></span>
+<span class="line"><span style="color: #c9d1d9">Command: `tanzu apps clustersupplychain list`</span></span>
+<span class="line"><span style="color: #c9d1d9">Example Usage:</span></span>
+<span class="line"><span style="color: #c9d1d9">```sh</span></span>
+<span class="line"><span style="color: #c9d1d9">tanzu apps clustersupplychain list</span></span>
+<span class="line"><span style="color: #c9d1d9">NAME                 READY   AGE</span></span>
+<span class="line"><span style="color: #c9d1d9">basic-image-to-url   Ready   11d</span></span>
+<span class="line"><span style="color: #c9d1d9">source-to-url        Ready   11d</span></span>
+<span class="line"><span style="color: #c9d1d9">```</span></span>
+<span class="line"><span style="color: #c9d1d9">Command:tanzu apps clustersupplychain get SUPPLYCHAIN-NAME</span></span>
+<span class="line"><span style="color: #c9d1d9">Example Usage:</span></span>
+<span class="line"><span style="color: #c9d1d9">```sh</span></span>
+<span class="line"><span style="color: #c9d1d9">tanzu apps cluster-supply-chain get source-to-url</span></span>
+<span class="line"><span style="color: #c9d1d9">---</span></span>
+<span class="line"><span style="color: #c9d1d9"># source-to-url: Ready</span></span>
+<span class="line"><span style="color: #c9d1d9">---</span></span>
+<span class="line"><span style="color: #c9d1d9">Supply Chain Selectors</span></span>
+<span class="line"><span style="color: #c9d1d9">   TYPE          KEY                                   OPERATOR   VALUE</span></span>
+<span class="line"><span style="color: #c9d1d9">   expressions   apps.tanzu.vmware.com/workload-type   In         web</span></span>
+<span class="line"><span style="color: #c9d1d9">   expressions   apps.tanzu.vmware.com/workload-type   In         server</span></span>
+<span class="line"><span style="color: #c9d1d9">   expressions   apps.tanzu.vmware.com/workload-type   In         worker</span></span>
+<span class="line"><span style="color: #c9d1d9">```</span></span>
+<span class="line"><span style="color: #c9d1d9">---###---</span></span>
+<span class="line"><span style="color: #c9d1d9">Content:</span></span>
+<span class="line"><span style="color: #c9d1d9">---###---</span></span>
+<span class="line"><span style="color: #c9d1d9">{text}</span></span>
+<span class="line"><span style="color: #c9d1d9">---###---</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">Identify the pattern and format shown in the example. Examine the Content for commands and example usage patterns like those shown in the example. Your response should only include the Command and Example usage for each relevant item you found in the Content. Your response should be formatted exactly the same way as the example, and your response should not include any other details.</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">In summary, the example shows two command examples for the `tanzu apps clustersupplychain` command: `list` and `get`. The usage pattern for each command is shown along with the expected output. The task is to identify similar command and usage patterns in the content and provide them in the same format as shown in the example.</span></span></code></pre>
+<p>I will not go into great detail explaining the prompt as I wrote another blog about that <a href="./fewshot-command-extraction.md">you can find here</a>. But, I will add that I have since started using html/xml like tags as delimiters pretty much exclusively because they work awesomely. In the above prompt, I am using the string <code>---###---</code> as a delimiter, which works well for more basic scenarios. But, the more you work with these models, the more you may find very complex prompt needs that benefit greatly from a more expressive format. When I say html/xml-like tags, I do not mean you should use real html/xml tags, but rather, that you should make up your own. The most important thing about a delimiter is that it is unique and not found in the text its wrapping. That is extremely easy to do with an html/xml-like format. But, using simple delimiters of nonsense strings misses out on an extremely powerful possibility of delimiters, that you can include descriptive elements and instructions within the delimiter. For example, when I am using chatgpt and I want to ask it a question about some code, I will wrap it with an identifier which will allow chatgpt to easily be able to find and answer questions about that specific code snippet without having to include it in the prompt everytime at least for the chatgpt web clients ability to query your history with it. You could use a descriptive name in the tag, a version number, I often just use the day and time to provide a simple unique id value, for example like `&#x3C;code 04031033> your code &#x3C;/code 04031033>. You could use standard attribute format like id=“0431033” or something like that, but chatgpt doesnt care how you provide the info, but how you provide the info does matter in the sense of how you want chatgpt to be able to find the data, like if you wanted to query it about code with a specific version number it would probably make sense to wrap it like <mycode version="1.2.3"> or similar. You could put any number of attributes or words in delimiters like this, I think it makes for a more powerful and expressive method of prompt engineering.</mycode></p>
+<p>One thing to note about the prompt is, it is definitely interesting that by providing those 2 examples gpt is so effective at extracting a wide variety of commands. And you may wonder, how would I actually know if it found all the commands are found, which is an astute observation. In this case im sure it wouldnt be that difficult to find a list of all the tanzu cli commands, or write some logic that could extract static patterns like tanzu <command group="" name="">, so this could be pretty easy to validate, but we could use this same ingestion method for things that are much harder to validate, and so the general approach is statistical sampling, and if accuracy is important to you, you would not just want to use pure random sampling to ensure each archetype is included in whatever depth of statistical sampling is needed for your desired accuracy level. In my case thus far I have done some very non-scientific random manual validation of several different samples I tested, and after playing with the prompt some I was at 100% in my informal tests. Perfect accuracy is not essential to my current use case so for now, I am happy taking a casual approach on this one, but as I implement more long-standing pipelines, I will implement more testing and tuning of model parameters and methods, for which it is useful to use a standard linear regression model to compare each configuration to provide a standardized and mature approach to evolve and maintain the performance of your setup.</command></p>
+<p>In the ChatCompletion call, the parameter <code>n=1</code> means I want the model to return one response. Temperature essentially controls the creativity of the model, much is written about temperature so I wont go into depth on it here other than to note, I started with 0.5 because that essentially indicates to use a medium level of creativity, which I thought was appropriate for this use case. I got good results without needing to adjust the temperature, which really isnt meaningful unless I test other values, and without that data its hard for me to comment on if or to what extent this parameter may be influencing my model performance.</p>
+<p>The rest of the code just saves the results to a json file. The save function creates the json file if it doesnt exist, and appends to it if it does exist, so if you loop this job a number of times, all the returns are in a nicely organized json file.</p>
+<h2 id="mainpy">main.py:</h2>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">import os</span></span>
+<span class="line"><span style="color: #c9d1d9">from openaicall import call_openai_api</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">openai_api_key = os.environ.get('OPENAI_API_KEY')</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Set the path to the directory containing the source text files</span></span>
+<span class="line"><span style="color: #c9d1d9">directory = '/scrapy/html'</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9"># Loop through the files in the directory</span></span>
+<span class="line"><span style="color: #c9d1d9">for filename in os.listdir(directory):</span></span>
+<span class="line"><span style="color: #c9d1d9">    # Make sure the file is a text file</span></span>
+<span class="line"><span style="color: #c9d1d9">    if filename.endswith('.html'):</span></span>
+<span class="line"><span style="color: #c9d1d9">        # Open the file and read the contents</span></span>
+<span class="line"><span style="color: #c9d1d9">        with open(os.path.join(directory, filename), 'r') as f:</span></span>
+<span class="line"><span style="color: #c9d1d9">            text = f.read()</span></span>
+<span class="line"><span style="color: #c9d1d9">        print(text)</span></span>
+<span class="line"><span style="color: #c9d1d9">        # Call the call_openai_api function with the text and the API key as input</span></span>
+<span class="line"><span style="color: #c9d1d9">        response = call_openai_api(text, openai_api_key)</span></span>
+<span class="line"><span style="color: #c9d1d9">        </span></span>
+<span class="line"><span style="color: #c9d1d9">        # Do something with the response (e.g. print it)</span></span>
+<span class="line"><span style="color: #c9d1d9">        print(response)</span></span></code></pre>
+<p>The main.py file is nothing exotic. As explained above, we want to get the API key from the environmental variable in this file. The <code>directory</code> var is set to <code>/scrapy/html</code> for my test environment, and it could be changed to any local directory easily to meet different needs. Next a for loop loops through each file listed in the directory. In each loop, it reads the content of the source file into a variable named <code>text</code>. It then prints the text to the console and calls the call_open_api function and passes in the contents of the <code>text</code> variable and the openai_api_key. The final line prints the response to the console, which is sort of insignificant, it may be useful if someone manually executes this from a prompt, but the main output in this case is done by the openaicall.py file, which saves the response into the openairesponses.json file.</p>
+<h2 id="the-results">The Results:</h2>
+<p>I am only going to include a small sample of results here or it would be too long, but as you will see, I have a nicely organized json file where I can easily access each response:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">[</span></span>
+<span class="line"><span style="color: #c9d1d9">    {</span></span>
+<span class="line"><span style="color: #c9d1d9">        "message": {</span></span>
+<span class="line"><span style="color: #c9d1d9">            "role": "assistant",</span></span>
+<span class="line"><span style="color: #c9d1d9">            "content": "Example:\n---###---\nCommand: `tanzu accelerator apply`\nExample Usage:\n```sh\ntanzu accelerator apply --filename &#x3C;path-to-resource-manifest>\n```\n---###---"</span></span>
+<span class="line"><span style="color: #c9d1d9">        },</span></span>
+<span class="line"><span style="color: #c9d1d9">        "finish_reason": "stop",</span></span>
+<span class="line"><span style="color: #c9d1d9">        "index": 0</span></span>
+<span class="line"><span style="color: #c9d1d9">    },</span></span>
+<span class="line"><span style="color: #c9d1d9">    {</span></span>
+<span class="line"><span style="color: #c9d1d9">        "message": {</span></span>
+<span class="line"><span style="color: #c9d1d9">            "role": "assistant",</span></span>
+<span class="line"><span style="color: #c9d1d9">            "content": "Example:\n---###---\nCommand: `tanzu insight vulnerabilities get --cveid &#x3C;cve-id> [--format &#x3C;format>] [flags]`\nExample Usage:\n```sh\ntanzu insight vulnerabilities get --cveid CVE-123123-2021\n```\n---###---"</span></span>
+<span class="line"><span style="color: #c9d1d9">        },</span></span>
+<span class="line"><span style="color: #c9d1d9">        "finish_reason": "stop",</span></span>
+<span class="line"><span style="color: #c9d1d9">        "index": 0</span></span>
+<span class="line"><span style="color: #c9d1d9">    }</span></span>
+<span class="line"><span style="color: #c9d1d9">]</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">I should definitely add some additional metadata to this, like the name of the file it was extracted from and other stuff I will think about later. </span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">Here are the results in a more readable format:</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span></code></pre>
+<p>Command:
+tanzu accelerator apply</p>
+<p>Example Usage:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">tanzu accelerator apply --filename &#x3C;path-to-resource-manifest></span></span></code></pre>
+<p>Command:
+tanzu insight vulnerabilities get —cveid <cve-id> [—format <format>] [flags]</format></cve-id></p>
+<p>Example Usage:</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">tanzu insight vulnerabilities get --cveid CVE-123123-2021</span></span></code></pre>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">I did check the documentation I fed in for these results, and in these sample cases there was 1 command listed in each document and the example usage was exactly as could be derived from the source. I also ran other samples with multiple commands per page and more complex output, and all worked great, but this post is already pretty long so wanted to keep this part short. At some point I will probably put the full results on github somewhere, this is all public data. </span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">## Summary and Whats next</span></span>
+<span class="line"><span style="color: #c9d1d9"></span></span>
+<span class="line"><span style="color: #c9d1d9">As I mentioned in the blog, I want to do some testing with the unstructured library to identify an ideal general purpose ingestion model, I need to add logging and error handling to each of the files and various other things, but, the biggest thing I am most excited about and want to do next is some light refactoring to implement this in a FaaS model using Tanzu/Knative functions and eventing, and create some application accelerators to easily roll out new executions of this for different target sites or data collections. I plan to have a number of different functions for different use cases like document extraction, chatbots, code generation, and other interesting things, so stay tuned for more blogs to come, I plan to document and share everything interesting I find. Thanks for reading!</span></span></code></pre>
+</article>
+
+
+    </div><br class="my-4 astro-ZGKQLBXH"><footer class="footer astro-AIJBNNF4">
+    <nav class="nav astro-AIJBNNF4">
+        <div class="astro-AIJBNNF4">2021  &copy; Copyright notice |  <a href="https://github.com/afewell" title="Art Fewell's Blog's Github URL'" class="astro-AIJBNNF4">Art Fewell&#39;s Blog</a>
+        <astro-island uid="Z1BHDED" component-url="/ModeLabel.3b836d0a.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;ModeLabel&quot;,&quot;value&quot;:true}" await-children=""><span slot="dark">(dark)</span></astro-island> theme on <a href="https://astro.build/" class="astro-AIJBNNF4">Astro</a></div>
+        <astro-island uid="1BbWTQ" component-url="/NetlifyIdentity.31726458.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-AIJBNNF4&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;NetlifyIdentity&quot;,&quot;value&quot;:true}"></astro-island>
+    </nav>
+</footer>
+<div class="portal-root">
+    <astro-island uid="Z2cQ0ST" component-url="/SearchModal.6fa86f6b.js" component-export="default" renderer-url="/client.788af3ea.js" props="{&quot;class&quot;:[0,&quot;astro-ZGKQLBXH&quot;]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;SearchModal&quot;,&quot;value&quot;:true}"></astro-island>
+</div>
+        </main>
+    </div>
+</body>
+
+
+
+
+</html>
