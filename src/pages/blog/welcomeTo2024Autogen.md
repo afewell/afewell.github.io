@@ -158,7 +158,7 @@ Now on the nav bar, select the `Workflows` tab and open the `Visualization Agent
 
 Now that we have added the generate_images skill, lets return to the Playground tab and see if the agent can complete our image request!
 
-On the Playground tab of the UI, I will ensure that the Visualization Agent Workflow is selected. To have a clean session, I will select the option to delete the previous failed query, and click the `New+` button to create a new session. Now I will ask the question again to see if our update image can generate the image. If you are following along, I recommend opening your web UI side by side next to your vscode window so you can observe the terminal output of the agent processing the request.
+On the Playground tab of the UI, I will ensure that the Visualization Agent Workflow is selected. To have a clean session, I will select the option to delete the previous failed query, and click the `New+` button to create a new session. Now I will ask the question again to see if our updated agent can now generate the image. If you are following along, I recommend opening your web UI side by side next to your vscode window so you can observe the terminal output of the agent processing the request.
 
 The screenshot below shows the result of our query! If you followed along, since this query requests abstract art, each response to this same query will yield very different and unique responses!
 
