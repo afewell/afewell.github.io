@@ -17,7 +17,7 @@ author: Art Fewell
 authorTwitter: afewell
 date: 2024-01-03T11:00:18.276Z
 ---
-Note: I am not opposed to AI writing, but this post was written and edited 100% by my own fingers so please forgive any human imperfections :)
+*Description: Asking the chatbot questions was so 2023, time to step up to multi-agent workflows with Microsoft's awesome new multi-agent framework Autogen and it's simple, easy-to-use no code web app, Autogen Studio. We will run it on Tanzu Kubernetes Grid on vSphere using vscode dev containers to grok it with cloud server performance with a local desktop UX, strap in and come along for the ride!*
 
 None of us will ever forget the impact AI had in 2023 ... getting access to ChatGPT I felt like Clark Kent busting out his cape, I felt like I could take on anything. And with enough time, I could have endless conversations with the chatbot and learn more than I ever thought possible. 
 
