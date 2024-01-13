@@ -110,8 +110,7 @@ Enter the following commands to install and launch AutoGen Studio:
 # Note that you will need to enter your OpenAI API Key or AutoGen Studio will not load correctly
 export OPENAI_API_KEY=enter-your-openai-api-key-here
 apt update
-apt install git
-apt install python3 pip
+apt install git python3 pip -y
 pip install autogenstudio
 autogenstudio ui --port 8081
 ```
